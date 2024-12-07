@@ -1,0 +1,28 @@
+[project]
+name = "server"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Teruki Tada", email = "me@peruki.dev" }
+]
+dependencies = [
+    "uvicorn>=0.32.1",
+    "fastapi>=0.115.6",
+    "pytest>=8.3.4",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/server"]
