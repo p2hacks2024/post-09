@@ -1,6 +1,7 @@
 import json
+from typing import List
 
-from models.activity import Activity
+from src.models.activity import Activity
 
 class JsonStrage:
     def __init__(self, file_path: str):
@@ -13,3 +14,7 @@ class JsonStrage:
     def write(self, data):
         with open(self.file_path, 'w') as f:
             json.dump(data, f)
+    
+    def get_activities(self) -> List[Activity]:
+        data = self.read()
+        return [Activity.from_dict(activity) for activity in data['activities']]
