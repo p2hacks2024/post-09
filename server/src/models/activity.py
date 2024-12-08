@@ -8,7 +8,7 @@ class Music:
     acousticness: float
 
 @dataclass
-class Activities:
+class Activity:
     '''
     ユーザーのアクティビティ情報
     '''
