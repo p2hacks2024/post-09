@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 @dataclass
 class Music:
@@ -13,7 +14,7 @@ class Activity:
     ユーザーのアクティビティ情報
     '''
     timestamp: str
-    emotion: str
+    emotion: List[float]
     weather: str
     temperature: float
     music: Music
