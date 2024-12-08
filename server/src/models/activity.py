@@ -1,15 +1,13 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 from typing import List
 
-@dataclass
-class Music:
+class Music(BaseModel):
     '''
     Spotify APIで取得できる楽曲情報
     '''
     acousticness: float
 
-@dataclass
-class Activity:
+class Activity(BaseModel):
     '''
     ユーザーのアクティビティ情報
     '''
