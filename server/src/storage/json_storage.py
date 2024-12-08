@@ -3,7 +3,7 @@ from typing import List
 
 from src.models.activity import Activity
 
-class JsonStrage:
+class JsonStorage:
     def __init__(self, file_path: str):
         self.file_path = file_path
 
