@@ -9,12 +9,9 @@ lerna-debug.log*
 
 node_modules
 dist
-dev-dist
 dist-ssr
+dev-dist
 *.local
-
-# with bun
-*.lockb
 
 # Editor directories and files
 .vscode/*

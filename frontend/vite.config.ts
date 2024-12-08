@@ -1,34 +1,36 @@
-import { defineConfig } from "vite";
-import { VitePWA } from "vite-plugin-pwa";
+import { VitePWA } from 'vite-plugin-pwa';
+import { defineConfig } from 'vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [
-        VitePWA({
-            registerType: "autoUpdate",
-            devOptions: {
-                enabled: true,
-            },
-            includeAssets: ["favicon.ico", "icon.png", "robots.txt"],
-            injectRegister: "auto",
-            manifest: {
-                name: "My Awesome App",
-                short_name: "MyApp",
-                description: "My Awesome App description",
-                theme_color: "#ffffff",
-                icons: [
-                    {
-                        src: "/favicon.ico",
-                        sizes: "64x64 32x32 24x24 16x16",
-                        type: "image/x-icon",
-                    },
-                    {
-                        src: "/icon.png",
-                        sizes: "512x512",
-                        type: "image/png",
-                        purpose: "any maskable",
-                    },
-                ],
-            },
-        }),
-    ],
-});
+  plugins: [svelte(), VitePWA({
+    registerType: 'prompt',
+    injectRegister: false,
+
+    pwaAssets: {
+      disabled: false,
+      config: true,
+    },
+
+    manifest: {
+      name: 'frontend',
+      short_name: 'frontend',
+      description: 'frontend',
+      theme_color: '#ffffff',
+    },
+
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+      cleanupOutdatedCaches: true,
+      clientsClaim: true,
+    },
+
+    devOptions: {
+      enabled: true,
+      navigateFallback: 'index.html',
+      suppressWarnings: true,
+      type: 'module',
+    },
+  })],
+})
