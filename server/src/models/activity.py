@@ -18,5 +18,3 @@ class Activity:
     weather: str
     temperature: float
     music: Music
-
-
