@@ -11,3 +11,5 @@ wheels/
 
 # vscode
 .vscode
+
+.gguf
