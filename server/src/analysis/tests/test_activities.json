@@ -1,0 +1,56 @@
+{
+    "activities": [
+        {
+            "timestamp": "2024-12-06T21:02:00Z",
+            "emotion": [
+                0.8,
+                0.1,
+                0.1
+            ],
+            "weather": "clear",
+            "temperature": 14.8,
+            "music": {
+                "acousticness": 0.35
+            }
+        },
+        {
+            "timestamp": "2024-12-06T22:15:00Z",
+            "emotion": [
+                0.4,
+                0.5,
+                0.1
+            ],
+            "weather": "cloudy",
+            "temperature": 14.2,
+            "music": {
+                "acousticness": 0.45
+            }
+        },
+        {
+            "timestamp": "2021-01-01T00:00:00",
+            "emotion": [
+                0.1,
+                0.2,
+                0.3
+            ],
+            "weather": "晴れ",
+            "temperature": 20.0,
+            "music": {
+                "acousticness": 0.5
+            }
+        },
+        {
+            "timestamp": "2021-01-01T00:00:00",
+            "emotion": [
+                0.1,
+                0.2,
+                0.3
+            ],
+            "weather": "晴れ",
+            "temperature": 20.0,
+            "music": {
+                "acousticness": 0.5
+            }
+        }
+    ]
+}
