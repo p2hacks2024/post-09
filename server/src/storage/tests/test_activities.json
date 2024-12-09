@@ -1,1 +1,18 @@
-{"activities": [{"timestamp": "2021-01-01T00:00:00", "emotion": [0.1, 0.2, 0.3, 0.4], "weather": "\u6674\u308c", "temperature": 20.0, "music": {"acousticness": 0.5}}]}
+{
+    "activities": [
+        {
+            "timestamp": "2021-01-01T00:00:00",
+            "emotion": [
+                0.1,
+                0.2,
+                0.3,
+                0.4
+            ],
+            "weather": "晴れ",
+            "temperature": 20.0,
+            "music": {
+                "acousticness": 0.5
+            }
+        }
+    ]
+}

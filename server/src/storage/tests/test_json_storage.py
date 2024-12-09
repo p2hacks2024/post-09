@@ -11,18 +11,18 @@ def test_read(json_storage):
     assert isinstance(data, dict)
     assert 'activities' in data
 
-def test_read_activities(json_storage):
-    activities = json_storage.read_activities()
+def test_load_activities(json_storage):
+    activities = json_storage.load_activities()
     print(activities)
     assert isinstance(activities, list)
 
-def test_write_activities(json_storage):
+def test_save_activities(json_storage):
     activities = [Activity(timestamp='2021-01-01T00:00:00', 
                            emotion=[0.1, 0.2, 0.3, 0.4], weather='晴れ',
                            temperature=20.0, 
                            music={'acousticness': 0.5})]
-    json_storage.write_activities(activities)
-    activities = json_storage.read_activities()
+    json_storage.save_activities(activities)
+    activities = json_storage.load_activities()
     assert len(activities) == 1
     assert activities[0].timestamp == '2021-01-01T00:00:00'
     assert activities[0].emotion == [0.1, 0.2, 0.3, 0.4]
