@@ -4,7 +4,7 @@ from models.activity import Activity
 
 @pytest.fixture
 def json_storage():
-    return JsonStorage('tests/test_activities.json')
+    return JsonStorage('test_data/test_activities.json')
 
 def test_read(json_storage):
     data = json_storage.read()

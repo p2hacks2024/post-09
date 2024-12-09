@@ -5,7 +5,7 @@ from models.activity import Activity, Music
 
 @pytest.fixture
 def analysis():
-    return Analysis('tests/test_activities.json')
+    return Analysis('test_data/test_activities.json')
 
 def test_get_activities(analysis):
     activities = analysis.get_activities()
