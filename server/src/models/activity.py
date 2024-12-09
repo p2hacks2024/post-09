@@ -12,7 +12,7 @@ class Activity(BaseModel):
     ユーザーのアクティビティ情報
     '''
     timestamp: str
-    emotion: List[float]
-    weather: str
-    temperature: float
-    music: Music
+    emotion: str
+    prompt: str
+    situation: str 
+    musics: List[Music]
