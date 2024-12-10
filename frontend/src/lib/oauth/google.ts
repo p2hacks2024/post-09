@@ -1,5 +1,5 @@
 const AUTH_REDIRECT_URI =
-	import.meta.env.VITE_AUTH_REDIRECT_URI === 'RELEASE'
+	import.meta.env.VITE_MODE === 'RELEASE'
 		? 'https://post-09.pages.dev/api/auth/google-oauth/callback'
 		: 'http://localhost:5173/api/auth/google-oauth/callback';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { AuthProvider, type AuthInfo } from './lib/oauth/google';
+	import { AuthProvider, type AuthInfo } from './lib/oauth/spotify';
 	import PWABadge from './lib/PWABadge.svelte';
 
 	let auth_info: AuthInfo | null = null;
@@ -15,7 +15,7 @@
 <main>
 	<p>
 		{auth_info?.signedIn()
-			? `Your User ID is: ${auth_info?.userid}`
+			? `Hello ${auth_info?.name}! Your User ID is: ${auth_info?.userid}`
 			: auth_info != null
 				? 'You are not signed in'
 				: 'Checking...'}
