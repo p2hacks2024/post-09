@@ -5,8 +5,12 @@
 	export let auth_provider: AuthProvider;
 </script>
 
-<p>
+<p class="text-right text-sm absolute top-0 right-0 p-2">
+    <span class="text-fsecondary">
+        {auth_info?.signedIn() ? 'Spotify ID: ' + auth_info.name : ''}
+    </span>
     <button
+        class="bg-transparent border-b-2 border-spotify text-fprimary"
         on:click={() => {
             if (auth_info?.signedIn()) {
                 auth_provider.signOut();
@@ -17,12 +21,9 @@
                 return;
             }
         }}
-        >{auth_info?.signedIn() ? 'Sign Out' : auth_info != null ? 'Sign In' : 'Checking...'}
+        >{auth_info?.signedIn() ? 'サインアウト' : auth_info != null ? 'Spotifyで認証する' : '確認中...'}
     </button>
 </p>
 
 <style>
-    button {
-        font-size: 1em;
-    }
 </style>
