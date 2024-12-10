@@ -7,6 +7,7 @@
 	let auth_provider: AuthProvider = new AuthProvider();
 
 	onMount(async () => {
+		console.log(import.meta.env);
 		auth_provider.handleAuthCallback();
 		auth_info = await auth_provider.checkAuthorized();
 	});
