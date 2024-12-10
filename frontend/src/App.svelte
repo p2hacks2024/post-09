@@ -23,7 +23,7 @@
 	});
 </script>
 
-<main class="main-bg">
+<main class="main-bg p-6">
 	{#if scene === 'analysis'}
 		<Analysis {auth_info} {auth_controller} />
 	{:else if scene === 'choice'}

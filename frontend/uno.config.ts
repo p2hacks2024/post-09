@@ -18,6 +18,14 @@ export default defineConfig({
             fwhite: '#f0f0f0',
             spotify: '#1DB954',
             spotifydark: '#195424',
+
+            buttonBack: '#1118',
+            buttonBackSelected: '#1110',
+            buttonBorder: '#aaa',
+            buttonOrange: '#f50',
+            buttonOrangeHover: '#e40',
+            buttonGreen: '#0f0',
+            buttonGreenHover: '#0e0',
         },
     },
 
