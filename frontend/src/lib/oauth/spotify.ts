@@ -61,7 +61,7 @@ export class AuthController {
 		const accessToken = params.get('access_token');
 		if (accessToken) {
 			localStorage.setItem(this.item_oauth_params, JSON.stringify({ access_token: accessToken }));
-			window.history.replaceState({}, document.title, window.location.origin + "?scene=" + scene);
+			window.history.replaceState({}, document.title, window.location.origin + '?scene=' + scene);
 		}
 	}
 

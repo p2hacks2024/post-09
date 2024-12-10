@@ -31,7 +31,7 @@
 	{:else if scene === 'suggestion'}
 		<Suggestion {auth_info} {auth_controller} />
 	{:else}
-		<Title {auth_info} {auth_controller} />
+		<Title {auth_info} {auth_controller} bind:scene />
 	{/if}
 </main>
 
