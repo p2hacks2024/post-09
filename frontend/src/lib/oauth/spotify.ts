@@ -1,4 +1,3 @@
-const AUTH_CLIENT_ID = import.meta.env.VITE_SPOTIFY_API_CLIENT_ID || '';
 const AUTH_SCOPES = ['user-read-email'];
 
 export class AuthInfo {
@@ -38,7 +37,7 @@ export class AuthProvider {
 			redirect_uri += '/api/auth/spotify/callback';
 		}
 		const params = {
-			client_id: AUTH_CLIENT_ID,
+			client_id: import.meta.env.VITE_SPOTIFY_API_CLIENT_ID || '',
 			redirect_uri: redirect_uri,
 			response_type: 'token',
 			scope: AUTH_SCOPES.join(' '),
