@@ -15,7 +15,7 @@
 	const emotions = ['怒り', '恐怖', '不安', '悲しみ', '寂しさ', '嫉妬心'];
 </script>
 
-<div class="h-screen text-fwhite flex flex-col items-center justify-center">
+<div class="h-full text-fwhite flex flex-col items-center justify-center">
 	<div class="max-w-120 w-full flex flex-col gap-5">
 		<div class="text-lg">あなたのフラッシュバックについて教えてください</div>
 		<div>

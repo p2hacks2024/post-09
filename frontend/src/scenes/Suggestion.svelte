@@ -6,7 +6,7 @@
 	export let auth_controller: AuthController;
 </script>
 
-<div class="h-screen text-fwhite">
+<div class="h-full text-fwhite">
 	<h1 class="text-4xl font-bold">曲</h1>
 	<p class="text-lg">曲をフラッシュ</p>
 	<div class="h-5"></div>

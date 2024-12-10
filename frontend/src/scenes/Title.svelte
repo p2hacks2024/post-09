@@ -8,7 +8,7 @@
 	export let scene: string;
 </script>
 
-<div class="flex flex-col items-center justify-center h-screen text-fwhite">
+<div class="flex flex-col items-center justify-center h-full text-fwhite">
 	<h1 class="text-4xl font-bold">FlushTune</h1>
 	<p class="text-lg text-center">素敵な音楽で<br />嫌な思い出をフラッシュ</p>
 	<div class="h-5"></div>
