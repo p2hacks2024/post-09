@@ -29,13 +29,8 @@ export class AuthProvider {
 
 	oauth2SignIn() {
 		const oauth2Endpoint = 'https://accounts.spotify.com/authorize';
-		let redirect_uri = window.location.href;
-		if (!redirect_uri.includes('/api/auth/spotify/callback')) {
-			redirect_uri = redirect_uri.replace(/#.*$/, '');
-			redirect_uri = redirect_uri.replace(/\?.*$/, '');
-			redirect_uri = redirect_uri.replace(/\/$/, '');
-			redirect_uri += '/api/auth/spotify/callback';
-		}
+		const redirect_uri = window.location.origin + '/api/auth/spotify/callback';
+
 		const params = {
 			client_id: import.meta.env.VITE_SPOTIFY_API_CLIENT_ID || '',
 			redirect_uri: redirect_uri,
