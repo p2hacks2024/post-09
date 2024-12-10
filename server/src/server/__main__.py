@@ -7,14 +7,13 @@ from storage.json_storage import JsonStorage
 
 from analysis.analysis import Analysis, AnalysisInput, AnalysisOutput, BaseOutput
 
-
 app = FastAPI()
 
 @app.get("/")
 async def root():
     return {"message": greet()}
 
-@app.post("/analysis")
+@app.post("/analysis/{user_id}")
 async def analysis(user_id: str):
     storge = JsonStorage("test_data/test_activities.json")
     activities = storge.read_user_activities(user_id)
