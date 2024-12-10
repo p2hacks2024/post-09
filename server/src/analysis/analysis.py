@@ -15,9 +15,5 @@ class Analysis:
         self.storage = JsonStorage(self.storage_path)
         self.activities = self.storage.load_activities()
 
-    def get_activities(self) -> List[Activity]:
-        return self.activities
-    
-    def add_activities(self, new_activity: Activity):
-        self.activities.append(new_activity)
-        self.storage.save_activities(self.activities)
+    def get_enotion_histgram(self) -> dict:
+        pass
