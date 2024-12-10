@@ -18,7 +18,7 @@ function generateRandomString() {
 	return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
-export class AuthProvider {
+export class AuthController {
 	item_oauth_params = 'spotify_oauth_params';
 
 	constructor() {}
@@ -55,13 +55,13 @@ export class AuthProvider {
 		form.submit();
 	}
 
-	handleAuthCallback() {
+	handleAuthCallback(scene: string) {
 		const fragmentString = window.location.hash.substring(1);
 		const params = new URLSearchParams(fragmentString);
 		const accessToken = params.get('access_token');
 		if (accessToken) {
 			localStorage.setItem(this.item_oauth_params, JSON.stringify({ access_token: accessToken }));
-			window.history.replaceState({}, document.title, window.location.pathname);
+			window.history.replaceState({}, document.title, window.location.origin + "?scene=" + scene);
 		}
 	}
 
