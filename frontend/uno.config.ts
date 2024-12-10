@@ -20,7 +20,9 @@ export default defineConfig({
             spotifydark: '#195424',
 
             buttonBack: '#1118',
-            buttonBackSelected: '#1110',
+            buttonBackHover: '#1115',
+            entryBack: '#1118',
+            entryBorder: '#333',
             buttonBorder: '#aaa',
             buttonOrange: '#f50',
             buttonOrangeHover: '#e40',

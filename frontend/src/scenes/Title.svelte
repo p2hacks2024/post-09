@@ -1,5 +1,5 @@
 <script lang="ts">
-	import StartButton from '../components/StartButton.svelte';
+	import PressButton from '../components/PressButton.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 
 	export let auth_info: AuthInfo | null;
@@ -12,11 +12,20 @@
 	<h1 class="text-4xl font-bold">FlushTune</h1>
 	<p class="text-lg text-center">素敵な音楽で<br />嫌な思い出をフラッシュ</p>
 	<div class="h-5"></div>
-	<StartButton
-		{auth_info}
-		{auth_controller}
-		on_start={() => {
-			scene = 'choice';
+	<PressButton
+		onClick={() => {
+			if (auth_info?.signedIn()) {
+				scene = 'choice';
+			} else if (auth_info != null) {
+				auth_controller.oauth2SignIn();
+			} else {
+				return;
+			}
 		}}
-	/>
+		>{auth_info?.signedIn()
+			? 'はじめる'
+			: auth_info != null
+				? 'Spotifyで認証する'
+				: '確認中...'}</PressButton
+	>
 </div>

@@ -27,7 +27,7 @@
 	{#if scene === 'analysis'}
 		<Analysis {auth_info} {auth_controller} />
 	{:else if scene === 'choice'}
-		<Choice {auth_info} {auth_controller} />
+		<Choice {auth_info} {auth_controller} bind:scene />
 	{:else if scene === 'suggestion'}
 		<Suggestion {auth_info} {auth_controller} />
 	{:else}
