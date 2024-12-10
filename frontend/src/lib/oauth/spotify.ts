@@ -1,7 +1,3 @@
-const AUTH_REDIRECT_URI =
-	import.meta.env.VITE_MODE === 'RELEASE'
-		? 'https://post-09.pages.dev/api/auth/spotify/callback'
-		: 'http://localhost:5173/api/auth/spotify/callback';
 const AUTH_CLIENT_ID = import.meta.env.VITE_SPOTIFY_API_CLIENT_ID || '';
 const AUTH_SCOPES = ['user-read-email'];
 
@@ -25,7 +21,7 @@ function generateRandomString() {
 
 export class AuthProvider {
 	item_oauth_params = 'spotify_oauth_params';
-	
+
 	constructor() {}
 
 	signOut() {
@@ -33,22 +29,29 @@ export class AuthProvider {
 	}
 
 	oauth2SignIn() {
-		var oauth2Endpoint = 'https://accounts.spotify.com/authorize';
-		var params = {
+		const oauth2Endpoint = 'https://accounts.spotify.com/authorize';
+		let redirect_uri = window.location.href;
+		if (!redirect_uri.includes('/api/auth/spotify/callback')) {
+			redirect_uri = redirect_uri.replace(/#.*$/, '');
+			redirect_uri = redirect_uri.replace(/\?.*$/, '');
+			redirect_uri = redirect_uri.replace(/\/$/, '');
+			redirect_uri += '/api/auth/spotify/callback';
+		}
+		const params = {
 			client_id: AUTH_CLIENT_ID,
-			redirect_uri: AUTH_REDIRECT_URI,
+			redirect_uri: redirect_uri,
 			response_type: 'token',
 			scope: AUTH_SCOPES.join(' '),
 			show_dialog: 'true',
 			state: generateRandomString()
 		} as Record<string, string>;
 
-		var form = document.createElement('form');
+		const form = document.createElement('form');
 		form.setAttribute('method', 'GET');
 		form.setAttribute('action', oauth2Endpoint);
 
-		for (var p in params) {
-			var input = document.createElement('input');
+		for (const p in params) {
+			const input = document.createElement('input');
 			input.setAttribute('type', 'hidden');
 			input.setAttribute('name', p);
 			input.setAttribute('value', params[p]);
@@ -69,10 +72,10 @@ export class AuthProvider {
 	}
 
 	async checkAuthorized(): Promise<AuthInfo> {
-		var params = JSON.parse(localStorage.getItem(this.item_oauth_params) || '{}');
+		const params = JSON.parse(localStorage.getItem(this.item_oauth_params) || '{}');
 		if (params && params['access_token']) {
 			let response = new Promise((resolve, reject) => {
-				var xhr = new XMLHttpRequest();
+				const xhr = new XMLHttpRequest();
 				xhr.open(
 					'GET',
 					'https://api.spotify.com/v1/me?' + 'access_token=' + params['access_token']
