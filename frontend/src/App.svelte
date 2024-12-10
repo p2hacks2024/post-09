@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { AuthProvider, type AuthInfo } from './lib/oauth/spotify';
 	import PWABadge from './lib/PWABadge.svelte';
+	import Account from './components/Account.svelte';
 
 	let auth_info: AuthInfo | null = null;
 	let auth_provider: AuthProvider = new AuthProvider();
@@ -13,26 +14,7 @@
 </script>
 
 <main>
-	<p>
-		{auth_info?.signedIn()
-			? `Hello ${auth_info?.name}! Your User ID is: ${auth_info?.userid}`
-			: auth_info != null
-				? 'You are not signed in'
-				: 'Checking...'}
-	</p>
-	<button
-		on:click={() => {
-			if (auth_info?.signedIn()) {
-				auth_provider.signOut();
-				location.reload();
-			} else if (auth_info != null) {
-				auth_provider.oauth2SignIn();
-			} else {
-				return;
-			}
-		}}
-		>{auth_info?.signedIn() ? 'Sign Out' : auth_info != null ? 'Sign In' : 'Checking...'}
-	</button>
+	<Account {auth_info} {auth_provider} />
 </main>
 
 <PWABadge />
