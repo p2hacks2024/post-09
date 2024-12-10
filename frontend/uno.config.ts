@@ -19,15 +19,17 @@ export default defineConfig({
             spotify: '#1DB954',
             spotifydark: '#195424',
 
+
+            entryBack: '#1118',
+            entryBorder: '#aaa',
             buttonBack: '#1118',
             buttonBackHover: '#1115',
-            entryBack: '#1118',
-            entryBorder: '#333',
             buttonBorder: '#aaa',
-            buttonOrange: '#f50',
-            buttonOrangeHover: '#e40',
-            buttonGreen: '#0f0',
-            buttonGreenHover: '#0e0',
+            buttonOrange: '#e50',
+            buttonOrangeHover: '#d40',
+
+            pressButtonBorder: '#0a0',
+            pressButtonBorderHover: '#0ac',
         },
     },
 

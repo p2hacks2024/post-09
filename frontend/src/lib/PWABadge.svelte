@@ -1,13 +1,8 @@
 <script lang="ts">
 	import { useRegisterSW } from 'virtual:pwa-register/svelte';
 
-	// periodic sync is disabled, change the value to enable it, the period is in milliseconds
-	// You can remove onRegisteredSW callback and registerPeriodicSync function
 	const period = 0;
 
-	/**
-	 * This function will register a periodic sync check every hour, you can modify the interval as needed.
-	 */
 	function registerPeriodicSync(swUrl: string, r: ServiceWorkerRegistration) {
 		if (period <= 0) return;
 
@@ -45,9 +40,7 @@
 	}
 
 	let toast = $derived($needRefresh);
-	let message = $derived(
-		$needRefresh ? 'New content available, click on reload button to update.' : ''
-	);
+	let message = $derived($needRefresh ? '最新のバージョンが利用可能です' : '');
 </script>
 
 {#if toast}
@@ -59,9 +52,9 @@
 		</div>
 		<div class="buttons">
 			{#if $needRefresh}
-				<button type="button" onclick={() => updateServiceWorker(true)}> Reload </button>
+				<button type="button" onclick={() => updateServiceWorker(true)}> リロードして適用 </button>
 			{/if}
-			<button type="button" onclick={close}> Close </button>
+			<button type="button" onclick={close}> 閉じる </button>
 		</div>
 	</div>
 {/if}
@@ -78,7 +71,8 @@
 		z-index: 2;
 		text-align: left;
 		box-shadow: 3px 4px 5px 0 #8885;
-		background-color: white;
+		background-color: #00000088;
+		color: white;
 	}
 	.pwa-toast .message {
 		margin-bottom: 8px;
@@ -92,5 +86,7 @@
 		margin-right: 5px;
 		border-radius: 2px;
 		padding: 3px 10px;
+		background-color: #88888888;
+		color: white;
 	}
 </style>

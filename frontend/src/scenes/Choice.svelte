@@ -3,7 +3,6 @@
 	import ChoiceButton from '../components/ChoiceButton.svelte';
 	import PressButton from '../components/PressButton.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
-	import { ToggleSet } from '../lib/toggleSet';
 
 	export let auth_info: AuthInfo | null;
 	export let auth_controller: AuthController;
@@ -12,10 +11,8 @@
 
 	let message: string = '';
 
-	let emotionSet: ToggleSet = new ToggleSet();
-	const emotions = ['怒り', '恐怖', '不安', '悲しみ', '寂しさ'];
-
-	$: console.log(emotionSet);
+	let chosenEmotion = '';
+	const emotions = ['怒り', '恐怖', '不安', '悲しみ', '寂しさ', '嫉妬心'];
 </script>
 
 <div class="h-screen text-fwhite flex flex-col items-center justify-center">
@@ -28,10 +25,9 @@
 				{#each emotions as emotion}
 					<ChoiceButton
 						category={emotion}
-						selected={emotionSet.has(emotion)}
+						selected={emotion === chosenEmotion}
 						onClick={() => {
-							emotionSet.toggle(emotion);
-							emotionSet = emotionSet;
+							chosenEmotion = emotion;
 						}}
 					/>
 				{/each}
