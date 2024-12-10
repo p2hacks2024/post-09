@@ -11,10 +11,13 @@ from storage.json_storage import JsonStorage
 
 '''
 exapmle:
+@app.post("/analysis")
+def analysis():
     storge = Storage("path")
     activities = storge.read_user_activities("0001")
     input = AnalysisInput(activities=activities)
     output = Analysis(input).output()
+    return output.per_total
 '''
 
 class AnalysisInput(BaseModel):
