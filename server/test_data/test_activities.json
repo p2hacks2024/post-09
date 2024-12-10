@@ -1,18 +1,20 @@
 {
-    "activities": [
+    "users": [
         {
-            "timestamp": "2021-01-01T00:00:00",
-            "emotion": [
-                0.1,
-                0.2,
-                0.3,
-                0.4
-            ],
-            "weather": "晴れ",
-            "temperature": 20.0,
-            "music": {
-                "acousticness": 0.5
-            }
+            "user_id": "0001",
+            "activities": [
+                {
+                    "timestamp": "2021-01-01T00:00:00",
+                    "emotion": "sad",
+                    "prompt": "What's wrong?",
+                    "situation": "work",
+                    "musics": [
+                        {
+                            "acousticness": 0.5
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

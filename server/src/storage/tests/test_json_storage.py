@@ -1,31 +1,45 @@
 import pytest
 from storage.json_storage import JsonStorage
-from models.activity import Activity
+from models.activity import Activity, Music
 
 @pytest.fixture
 def json_storage():
     return JsonStorage('test_data/test_activities.json')
 
-def test_read(json_storage):
-    data = json_storage.read()
-    assert isinstance(data, dict)
-    assert 'activities' in data
+'''
+test_create_and_read: user_id = '0002'のユーザーを追加
+test_update: user_id = '0002'のユーザーを更新
+test_delete: user_id = '0002'のユーザーを削除
+'''
 
-def test_load_activities(json_storage):
-    activities = json_storage.load_activities()
-    print(activities)
-    assert isinstance(activities, list)
+def test_create_and_read(json_storage):
+    # アクティビティリストを追加
+    user_id = '0002'
+    activities_created = [Activity(timestamp='2021-01-01T00:00:00', 
+                           emotion="sad", 
+                           prompt="What's wrong?",
+                           situation="work", 
+                           musics=[Music(acousticness=0.5)])]
+    json_storage.create_user_activities(user_id, activities_created)
+    activities_read = json_storage.read_user_activities(user_id)
+    assert activities_created == activities_read
 
-def test_save_activities(json_storage):
-    activities = [Activity(timestamp='2021-01-01T00:00:00', 
-                           emotion=[0.1, 0.2, 0.3, 0.4], weather='晴れ',
-                           temperature=20.0, 
-                           music={'acousticness': 0.5})]
-    json_storage.save_activities(activities)
-    activities = json_storage.load_activities()
-    assert len(activities) == 1
-    assert activities[0].timestamp == '2021-01-01T00:00:00'
-    assert activities[0].emotion == [0.1, 0.2, 0.3, 0.4]
-    assert activities[0].weather == '晴れ'
-    assert activities[0].temperature == 20.0
-    assert activities[0].music.acousticness == 0.5
+def test_update(json_storage):
+    # アクティビティリストを更新
+    user_id = '0002'
+    activities_updated = [Activity(timestamp='2021-01-01T00:00:00', 
+                           emotion="sad", 
+                           prompt="What's wrong?",
+                           situation="work", 
+                           musics=[Music(acousticness=0.5)])]
+    json_storage.update_user_activities(user_id, activities_updated)
+    activities_read = json_storage.read_user_activities(user_id)
+    assert activities_updated == activities_read
+
+def test_delete(json_storage):
+    # アクティビティリストを削除
+    user_id = '0002'
+    json_storage.delete_user_activities(user_id)
+    activities_read = json_storage.read_user_activities(user_id)
+    assert activities_read == []
+
