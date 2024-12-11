@@ -1,6 +1,9 @@
+import os
+from dotenv import load_dotenv
 from utils.lib import greet
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from models.activity import Activity
 from storage.json_storage import JsonStorage
@@ -8,6 +11,18 @@ from storage.json_storage import JsonStorage
 from analysis.analysis import Analysis, AnalysisInput, AnalysisOutput, BaseOutput
 
 app = FastAPI()
+
+load_dotenv(verbose=True)
+
+# Allow CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[str(os.environ.get("FRONTEND_ORIGIN"))],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 async def root():
