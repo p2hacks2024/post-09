@@ -72,16 +72,16 @@ export class AuthController {
 	handleAuthCallback(scene: string) {
 		const fragmentString = window.location.hash.substring(1);
 		const params = new URLSearchParams(fragmentString);
-		const accessToken = params.get('accessToken');
+		const accessToken = params.get('access_token');
 		if (accessToken) {
-			localStorage.setItem(this.item_oauth_params, JSON.stringify({ accessToken: accessToken }));
+			localStorage.setItem(this.item_oauth_params, JSON.stringify({ access_token: accessToken }));
 			window.history.replaceState({}, document.title, window.location.origin + '?scene=' + scene);
 		}
 	}
 
 	accessToken(): string {
 		const params = JSON.parse(localStorage.getItem(this.item_oauth_params) || '{}');
-		return params['accessToken'] || '';
+		return params['access_token'] || '';
 	}
 
 	async checkAuthorized(): Promise<AuthInfo> {
@@ -89,7 +89,7 @@ export class AuthController {
 		if (accessToken) {
 			let response = new Promise((resolve, _reject) => {
 				const xhr = new XMLHttpRequest();
-				xhr.open('GET', 'https://api.spotify.com/v1/me?' + 'accessToken=' + accessToken);
+				xhr.open('GET', 'https://api.spotify.com/v1/me?' + 'access_token=' + accessToken);
 				let signinFunc = this.oauth2SignIn;
 				xhr.onreadystatechange = function (_) {
 					if (xhr.readyState === 4 && xhr.status === 200) {
