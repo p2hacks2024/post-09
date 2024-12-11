@@ -23,7 +23,7 @@
 	});
 </script>
 
-<main class="main-bg p-6 h-screen overflow-hidden">
+<main class="main-bg h-screen overflow-hidden p-5">
 	{#if scene === 'analysis'}
 		<Analysis {authInfo} {authController} />
 	{:else if scene === 'choice'}
