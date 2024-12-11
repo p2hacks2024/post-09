@@ -1,4 +1,3 @@
-from calendar import c
 import sqlite3
 from typing import List
 
@@ -44,7 +43,7 @@ class DBStorage(Storage):
         ''', (user_id,))
         return self.c.fetchone()[0]
     
-    def _is_exit_user(self, user_id: str) -> bool:
+    def _is_exist_user(self, user_id: str) -> bool:
         # user_idが存在するか確認
         self.c.execute('''
             SELECT user_id FROM users WHERE user_id = ?
@@ -65,7 +64,7 @@ class DBStorage(Storage):
         ''', (user_id,))
         pass
     
-    def _is_exit_activity(self, user_id: str) -> bool:
+    def _is_exist_activity(self, user_id: str) -> bool:
         # user_idに対してactivitiesが存在するか確認
         self.c.execute('''
             SELECT user_id FROM activities WHERE user_id = ?
@@ -90,7 +89,6 @@ class DBStorage(Storage):
                 self.c.execute('''
                     INSERT INTO musics (activity_id, acousticness) VALUES (?, ?)
                 ''', (activity_db_id, music.acousticness))
-        pass
 
     def _delete_activities(self, user_id: str):
         '''
@@ -108,16 +106,16 @@ class DBStorage(Storage):
     def create_user_activities(self, user_id: str, activities: List[Activity]):
         '''
         Create: activitiesをDBに新規追加
-        user_idが存在しない場合 -> user_idをDBに新規追加
+        user_idが存在しない場合 -> user_idをDBに新規追加, activitiesをDBに新規追加
         user_idが存在するがactivitiesが存在しない場合 -> activitiesをDBに新規追加
         user_idが存在しactivitiesも存在する場合 -> 既に存在するためエラーを返す
         '''
-        if not self._is_exit_user(user_id):
+        if not self._is_exist_user(user_id):
             # user_idが存在しない場合
             print("user_id:",user_id, "is not exist.")
             self._insert_user(user_id) # user_idをDBに新規追加
             self._insert_activities(user_id, activities) # activitiesをDBに新規追加
-        elif not self._is_exit_activity(user_id):
+        elif not self._is_exist_activity(user_id):
             # user_idが存在するがactivitiesが存在しない場合
             print("user_id:",user_id, "is exist but activities is not exist.")
             self._insert_activities(user_id, activities) # activitiesをDBに新規追加
@@ -133,7 +131,7 @@ class DBStorage(Storage):
         user_idが存在するがactivitiesが存在しない場合 -> 空のリストを返す
         '''
         # user_idが既に存在するか確認
-        if not self._is_exit_user(user_id) or not self._is_exit_activity(user_id):
+        if not self._is_exist_user(user_id) or not self._is_exist_activity(user_id):
             print("user_id:",user_id, "is not exist.")
             return []
         
@@ -168,9 +166,9 @@ class DBStorage(Storage):
         user_idが存在するがactivitiesが存在しない場合 -> エラーを返す
         user_idが存在しactivitiesも存在する場合 -> activitiesをDBに更新
         '''
-        if not self._is_exit_user(user_id):
+        if not self._is_exist_user(user_id):
             raise ValueError(f'User {user_id} does NOT exist.')
-        elif not self._is_exit_activity(user_id):
+        elif not self._is_exist_activity(user_id):
             raise ValueError(f'User {user_id} does NOT have any activities.')
 
         self._delete_activities(user_id)
@@ -181,14 +179,14 @@ class DBStorage(Storage):
     def delete_user_activities(self, user_id: str):
         '''
         Delete: activitiesをDBから削除
-        user_idが存在しない場合 -> エラーを返す
+        user_idが存在しない場合 -> 何もしない
         user_idが存在するがactivitiesが存在しない場合 -> エラーを返す
         user_idが存在しactivitiesも存在する場合 -> activitiesをDBから削除
         '''
-        if not self._is_exit_user(user_id):
-            # user_idが存在しない場合 -> 削除するものがない
-            raise ValueError(f'User {user_id} does NOT exist.')
-        elif not self._is_exit_activity(user_id):
+        if not self._is_exist_user(user_id):
+            # user_idが存在しない場合 -> 何もしない
+            return
+        if not self._is_exist_activity(user_id):
             # user_idが存在するがactivitiesが存在しない場合 -> 削除するものがない
             raise ValueError(f'User {user_id} does NOT have any activities.')
         else:
@@ -196,5 +194,3 @@ class DBStorage(Storage):
             print("user_id:",user_id, "is exist and activities is exist.")
             self._delete_activities(user_id)
         self.conn.commit()
-
-        pass
