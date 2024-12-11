@@ -49,6 +49,6 @@
 			}}>音楽を開始</PressButton
 		>
 	</div>
-
-	<AccountConfig {authInfo} {authController} />
 </div>
+
+<AccountConfig {authInfo} {authController} />

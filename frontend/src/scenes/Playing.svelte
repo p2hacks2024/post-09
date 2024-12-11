@@ -20,5 +20,6 @@
 	<p class="text-lg">曲をフラッシュ</p>
 	<div class="h-5"></div>
 	<Player track="3AoEQRuFf8zVXWqSLo2UOi" />
-	<AccountConfig {authInfo} {authController} />
 </div>
+
+<AccountConfig {authInfo} {authController} />
