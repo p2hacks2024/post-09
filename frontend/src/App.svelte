@@ -10,7 +10,7 @@
 	let authInfo: AuthInfo | null = null;
 	let authController: AuthController = new AuthController();
 
-	const defaultScene = 'analysis';
+	const defaultScene = import.meta.env.VITE_DEFAULT_SCENE || '';
 
 	let scene = defaultScene;
 
