@@ -8,12 +8,6 @@
 	export let heightClass: string = 'h-50';
 	let canvas: HTMLCanvasElement;
 
-	function update() {
-		canvas.innerHTML = '';
-		const domElement = createElementFunc(canvas);
-		canvas.appendChild(domElement);
-	}
-
 	onMount(() => {
 		canvas = document.getElementById('canvas' + boxId) as HTMLCanvasElement;
 		if (hasBorder) {
@@ -23,7 +17,9 @@
 	});
 
 	$: if (analysis) {
-		update();
+		canvas.innerHTML = '';
+		const domElement = createElementFunc(canvas);
+		canvas.appendChild(domElement);
 	}
 </script>
 
