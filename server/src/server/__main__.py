@@ -45,8 +45,11 @@ async def analysis(user_id: str):
     }
 
 
-@app.post("/suggester", response_model=SuggesterOutput)
-async def suggester(input: SuggesterInput) -> SuggesterOutput:
+@app.post("/suggester/{user_id}", response_model=SuggesterOutput)
+async def suggester(user_id: str) -> SuggesterOutput:
+    storge = JsonStorage("test_data/test_activities.json")
+    activities = storge.read_user_activities(user_id)
+    input = SuggesterInput(emotion="sad", prompt="Help me!!!!", activities=activities)
     suggester = Suggester(input=input)
     output = suggester.llm_runner()
     return output
