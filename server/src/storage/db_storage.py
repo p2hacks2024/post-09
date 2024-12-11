@@ -36,6 +36,13 @@ class DBStorage(Storage):
         )
         ''')
         self.conn.commit()
+
+    def __enter__ (self):
+        return self
+
+    def __exit__ (self, exc_type, exc_value, traceback):
+        self.conn.commit()
+        self.conn.close()
     
     def _is_exist_user(self, user_id: str) -> bool:
         # user_idが存在するか確認
@@ -115,6 +122,9 @@ class DBStorage(Storage):
                 ''', (activity_id, music.acousticness))
 
     def _update_activities(self, user_id: str, new_activities: List[Activity]):
+        '''
+        指定されたuser_idに対応するactivitiesをDBに更新
+        '''
         existing_activities = self._get_existing_activities(user_id)
         
         for new_activity in new_activities:
