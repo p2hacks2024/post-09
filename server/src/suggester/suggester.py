@@ -44,8 +44,8 @@ class Suggester(BaseModel):
         output = SuggesterOutput(
             musics=musics,
             summary="バイトでの失敗",
-            comment="それはお辛い出来事でしたね。辛い気持ちをflushするために、\
-                以下の曲はいかがでしょうか？",
+            comment="それはお辛い出来事でしたね。辛い気持ちをflushするために、"
+            "以下の曲はいかがでしょうか？",
         )
 
         return output
