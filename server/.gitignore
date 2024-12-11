@@ -6,5 +6,8 @@ dist/
 wheels/
 *.egg-info
 
+# envfile
+.env
+
 # venv
 .venv
