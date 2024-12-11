@@ -2,8 +2,8 @@
 	import PressButton from '../components/PressButton.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 
-	export let auth_info: AuthInfo | null;
-	export let auth_controller: AuthController;
+	export let authInfo: AuthInfo | null;
+	export let authController: AuthController;
 
 	export let scene: string;
 </script>
@@ -14,17 +14,17 @@
 	<div class="h-5"></div>
 	<PressButton
 		onClick={() => {
-			if (auth_info?.signedIn()) {
+			if (authInfo?.signedIn()) {
 				scene = 'choice';
-			} else if (auth_info != null) {
-				auth_controller.oauth2SignIn();
+			} else if (authInfo != null) {
+				authController.oauth2SignIn();
 			} else {
 				return;
 			}
 		}}
-		>{auth_info?.signedIn()
+		>{authInfo?.signedIn()
 			? 'はじめる'
-			: auth_info != null
+			: authInfo != null
 				? 'Spotifyで認証する'
 				: '確認中...'}</PressButton
 	>

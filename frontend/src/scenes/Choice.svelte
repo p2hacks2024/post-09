@@ -4,8 +4,8 @@
 	import PressButton from '../components/PressButton.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 
-	export let auth_info: AuthInfo | null;
-	export let auth_controller: AuthController;
+	export let authInfo: AuthInfo | null;
+	export let authController: AuthController;
 
 	export let scene: string;
 
@@ -45,10 +45,10 @@
 
 		<PressButton
 			onClick={() => {
-				scene = 'suggestion';
+				scene = 'playing';
 			}}>音楽を開始</PressButton
 		>
 	</div>
 
-	<AccountConfig {auth_info} {auth_controller} />
+	<AccountConfig {authInfo} {authController} />
 </div>

@@ -1,16 +1,30 @@
 const AUTH_SCOPES = ['user-read-email'];
 
 export class AuthInfo {
-	signed_in: boolean;
-	name: string = '';
-	userid: string = '';
-	constructor(signed_in: boolean, name: string, userid: string) {
-		this.signed_in = signed_in;
+	private isSignedIn: boolean;
+	private name: string = '';
+	private userid: string = '';
+	private accessToken: string = '';
+	constructor(isSignedIn: boolean, name: string, userid: string, accessToken: string) {
+		this.isSignedIn = isSignedIn;
 		this.name = name;
 		this.userid = userid;
+		this.accessToken = accessToken;
 	}
 	signedIn(): boolean {
-		return this.signed_in;
+		return this.isSignedIn;
+	}
+
+	getName(): string {
+		return this.name;
+	}
+
+	getUserId(): string {
+		return this.userid;
+	}
+
+	getAccessToken(): string {
+		return this.accessToken;
 	}
 }
 
@@ -58,16 +72,16 @@ export class AuthController {
 	handleAuthCallback(scene: string) {
 		const fragmentString = window.location.hash.substring(1);
 		const params = new URLSearchParams(fragmentString);
-		const accessToken = params.get('access_token');
+		const accessToken = params.get('accessToken');
 		if (accessToken) {
-			localStorage.setItem(this.item_oauth_params, JSON.stringify({ access_token: accessToken }));
+			localStorage.setItem(this.item_oauth_params, JSON.stringify({ accessToken: accessToken }));
 			window.history.replaceState({}, document.title, window.location.origin + '?scene=' + scene);
 		}
 	}
 
 	accessToken(): string {
 		const params = JSON.parse(localStorage.getItem(this.item_oauth_params) || '{}');
-		return params['access_token'] || '';
+		return params['accessToken'] || '';
 	}
 
 	async checkAuthorized(): Promise<AuthInfo> {
@@ -75,7 +89,7 @@ export class AuthController {
 		if (accessToken) {
 			let response = new Promise((resolve, _reject) => {
 				const xhr = new XMLHttpRequest();
-				xhr.open('GET', 'https://api.spotify.com/v1/me?' + 'access_token=' + accessToken);
+				xhr.open('GET', 'https://api.spotify.com/v1/me?' + 'accessToken=' + accessToken);
 				let signinFunc = this.oauth2SignIn;
 				xhr.onreadystatechange = function (_) {
 					if (xhr.readyState === 4 && xhr.status === 200) {
@@ -89,12 +103,12 @@ export class AuthController {
 			return response
 				.then((resp) => {
 					const data = resp as any;
-					return new AuthInfo(true, data.display_name, data.id);
+					return new AuthInfo(true, data.display_name, data.id, accessToken);
 				})
 				.catch((_) => {
-					return new AuthInfo(false, '', '');
+					return new AuthInfo(false, '', '', '');
 				});
 		}
-		return new AuthInfo(false, '', '');
+		return new AuthInfo(false, '', '', '');
 	}
 }
