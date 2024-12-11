@@ -26,6 +26,7 @@ def test_create_and_read_user_activities(db_storage):
                             ]
     db_storage.create_user_activities(user_id(), activitites_created)
     activities_read = db_storage.read_user_activities(user_id())
+    print(activities_read)
     assert activitites_created[-1].emotion == activities_read[-1].emotion
     assert activitites_created[-1].prompt == activities_read[-1].prompt
     assert activitites_created[-1].situation == activities_read[-1].situation
@@ -33,7 +34,7 @@ def test_create_and_read_user_activities(db_storage):
 
 
 def test_update_user_activities(db_storage):
-    activitites_updated = [Activity(timestamp='2021-01-01T00:00:00',
+    activitites_updated = [Activity(timestamp='2021-01-02T01:00:00',
                             emotion='sad',
                             prompt='ぴえん',
                             situation='感情の落ち込み',

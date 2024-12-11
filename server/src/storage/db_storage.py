@@ -37,12 +37,6 @@ class DBStorage(Storage):
         ''')
         self.conn.commit()
     
-    def _get_user_db_id(self, user_id: str) -> int:
-        self.c.execute('''
-            SELECT ROW_NUMBER() OVER (ORDER BY user_id) AS row_num, user_id FROM users WHERE user_id = ?
-        ''', (user_id,))
-        return self.c.fetchone()[0]
-    
     def _is_exist_user(self, user_id: str) -> bool:
         # user_idが存在するか確認
         self.c.execute('''
@@ -68,40 +62,115 @@ class DBStorage(Storage):
         # user_idに対してactivitiesが存在するか確認
         self.c.execute('''
             SELECT user_id FROM activities WHERE user_id = ?
-        ''', (self._get_user_db_id(user_id),))
+        ''', (user_id,))
         return len(self.c.fetchall()) > 0
+    
+    def _get_existing_activities(self, user_id: str) -> List[Activity]:
+        '''
+        指定されたuser_idに対応するactivitiesをDBから取得
+        '''
+        self.c.execute('''
+            SELECT * FROM activities WHERE user_id = ?
+        ''', (user_id,))
+        activities = []
+        for activity_row in self.c.fetchall():
+            activity_id = activity_row[0]
+            self.c.execute('''
+                SELECT acousticness FROM musics WHERE activity_id = ?
+            ''', (activity_id,))
+            musics = []
+            for music_row in self.c.fetchall():
+                musics.append(Music(acousticness=music_row[0]))
+            activity = Activity(
+                timestamp=activity_row[2],
+                emotion=activity_row[3],
+                prompt=activity_row[4],
+                situation=activity_row[5],
+                musics=musics
+            )
+            activities.append(activity)
+        return activities
     
     def _insert_activities(self, user_id: str, activities: List[Activity]):
         '''
         指定されたuser_idに対応するactivitiesをDBに新規追加
         '''
-        user_db_id = self._get_user_db_id(user_id)
         for activity in activities:
             self.c.execute('''
-                INSERT INTO activities (user_id, timestamp, emotion, prompt, situation) VALUES (?, ?, ?, ?, ?)
-            ''', (user_db_id, 
+                INSERT INTO activities (
+                    user_id, 
+                    timestamp, 
+                    emotion, 
+                    prompt, 
+                    situation) VALUES (?, ?, ?, ?, ?)
+            ''', (user_id, 
                   activity.timestamp, 
                   activity.emotion, 
                   activity.prompt, 
                   activity.situation))
-            activity_db_id = self.c.lastrowid
+            activity_id = self.c.lastrowid
             for music in activity.musics:
                 self.c.execute('''
                     INSERT INTO musics (activity_id, acousticness) VALUES (?, ?)
-                ''', (activity_db_id, music.acousticness))
+                ''', (activity_id, music.acousticness))
+
+    def _update_activities(self, user_id: str, new_activities: List[Activity]):
+        existing_activities = self._get_existing_activities(user_id)
+        
+        for new_activity in new_activities:
+            # 既存のアクティビティを検索
+            existing_activity = None
+            for activity in existing_activities:
+                if activity.timestamp == new_activity.timestamp:
+                    existing_activity = activity
+                    break
+            
+            if existing_activity != None:
+                # 差分がある場合のみ更新
+                if (existing_activity.emotion != new_activity.emotion or
+                    existing_activity.prompt != new_activity.prompt or
+                    existing_activity.situation != new_activity.situation):
+                    self.c.execute('''
+                        UPDATE activities 
+                        SET emotion = ?, prompt = ?, situation = ?
+                        WHERE user_id = ? AND timestamp = ? 
+                    ''', (new_activity.emotion, 
+                          new_activity.prompt, 
+                          new_activity.situation, 
+                          user_id, 
+                          new_activity.timestamp))
+                
+                # 音楽情報の更新
+                for new_music in new_activity.musics:
+                    self.c.execute('''
+                        UPDATE musics
+                        SET acousticness = ?
+                        WHERE activity_id = (
+                            SELECT activity_id FROM activities WHERE user_id = ? AND timestamp = ?
+                        )
+                    ''', (new_music.acousticness, user_id, new_activity.timestamp))
+            else:
+                # 新しいアクティビティを挿入
+                self.c.execute('''
+                    INSERT INTO activities (user_id, timestamp, emotion, prompt, situation) VALUES (?, ?, ?, ?, ?)
+                ''', (user_id, new_activity.timestamp, new_activity.emotion, new_activity.prompt, new_activity.situation))
+                activity_id = self.c.lastrowid
+                for new_music in new_activity.musics:
+                    self.c.execute('''
+                        INSERT INTO musics (activity_id, acousticness) VALUES (?, ?)
+                    ''', (activity_id, new_music.acousticness))
+
 
     def _delete_activities(self, user_id: str):
         '''
         指定されたuser_idに対応するactivitiesをDBから削除
         '''
-        user_db_id = self._get_user_db_id(user_id)
         self.c.execute('''
             DELETE FROM activities WHERE user_id = ?
-        ''', (user_db_id,))
+        ''', (user_id,))
         self.c.execute('''
             DELETE FROM musics WHERE activity_id NOT IN (SELECT activity_id FROM activities)
         ''')
-        pass
     
     def create_user_activities(self, user_id: str, activities: List[Activity]):
         '''
@@ -134,30 +203,8 @@ class DBStorage(Storage):
         if not self._is_exist_user(user_id) or not self._is_exist_activity(user_id):
             print("user_id:",user_id, "is not exist.")
             return []
-        
-        self.c.execute('''
-            SELECT * FROM activities WHERE user_id = ?
-        ''', (self._get_user_db_id(user_id),))
-        activities = []
-        rows = self.c.fetchall()
-        print(rows)
-        for activity_row in rows :
-            activity_db_id = self.c.lastrowid
-            self.c.execute('''
-                SELECT acousticness FROM musics WHERE activity_id = ?
-            ''', (activity_db_id,))
-            musics = []
-            for music_row in self.c.fetchall():
-                musics.append(Music(acousticness=music_row[0]))
-            activity = Activity(
-                timestamp=activity_row[2],
-                emotion=activity_row[3],
-                prompt=activity_row[4],
-                situation=activity_row[5],
-                musics=musics
-            )
-            activities.append(activity)
-        return activities
+        else:
+            return self._get_existing_activities(user_id)
 
     def update_user_activities(self, user_id: str, activities: List[Activity]):
         '''
@@ -171,10 +218,8 @@ class DBStorage(Storage):
         elif not self._is_exist_activity(user_id):
             raise ValueError(f'User {user_id} does NOT have any activities.')
 
-        self._delete_activities(user_id)
-        self._insert_activities(user_id, activities)
+        self._update_activities(user_id, activities)
         self.conn.commit()
-        pass
     
     def delete_user_activities(self, user_id: str):
         '''
