@@ -9,7 +9,14 @@ wheels/
 # venv
 .venv
 
+# .env
+.env
+
 # vscode
 .vscode
 
-.gguf
+#LLMのファイルをgitignore
+*.gguf
+
+# .cache
+.cache
