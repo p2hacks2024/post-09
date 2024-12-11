@@ -11,3 +11,6 @@ wheels/
 
 # venv
 .venv
+
+# vscode
+.vscode/
