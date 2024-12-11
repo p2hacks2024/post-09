@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import AccountConfig from '../components/AccountConfig.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
+	import DrawBox from '../components/DrawBox.svelte';
 	import * as THREE from 'three';
 
 	export let authInfo: AuthInfo | null;
@@ -30,25 +30,15 @@
 			});
 	}
 
-	onMount(() => {
-		const canvas = document.getElementById('canvas');
-		if (!canvas) {
-			return;
-		}
-
+	// 参考: Three.js
+	function createDrawElement(root: HTMLCanvasElement) {
 		const scene = new THREE.Scene();
-		const camera = new THREE.PerspectiveCamera(
-			40,
-			canvas.clientWidth / canvas.clientHeight,
-			0.1,
-			100
-		);
+		const camera = new THREE.PerspectiveCamera(40, root.clientWidth / root.clientHeight, 0.1, 100);
 		const renderer = new THREE.WebGLRenderer({ alpha: true });
 
-		renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+		renderer.setSize(root.clientWidth, root.clientHeight);
 		camera.position.z = 5;
 
-		// draw simple plane
 		const geometry = new THREE.PlaneGeometry(1, 1);
 		const material = new THREE.MeshBasicMaterial({ color: 0x00cccc });
 		const plane = new THREE.Mesh(geometry, material);
@@ -60,17 +50,35 @@
 		};
 		renderer.setAnimationLoop(animate);
 
-		canvas.appendChild(renderer.domElement);
-	});
+		return renderer.domElement;
+	}
+
+	// 参考: Canvas2D
+	function createDrawElement2(root: HTMLCanvasElement) {
+		const canvas = document.createElement('canvas');
+		canvas.width = root.clientWidth;
+		canvas.height = root.clientHeight;
+		const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+		if (!ctx) {
+			throw new Error('Failed to get 2D context');
+		}
+
+		// draw simple rectangle
+		ctx.fillStyle = '#cc00cc';
+		ctx.fillRect(canvas.width / 4, canvas.height / 4, canvas.width / 2, canvas.height / 2);
+
+		return canvas;
+	}
 </script>
 
 <div class="h-full text-fwhite flex flex-col justify-center">
 	<h1 class="text-4xl font-bold">記録</h1>
-	<p class="text-lg">記録をフラッシュ</p>
+	<p class="text-lg">記録A...</p>
+	<DrawBox boxId="0" createElementFunc={createDrawElement} />
+	<p class="text-lg">記録B...</p>
+	<DrawBox boxId="1" hasBorder={true} heightClass="h-20" createElementFunc={createDrawElement2} />
 
-	<div class="w-full h-50 overflow-hidden bg-transparent" id="canvas"></div>
-
-	<p class="text-sm">{JSON.stringify(analysis)}</p>
+	<p class="text-2">{JSON.stringify(analysis)}</p>
 </div>
 
 <AccountConfig {authInfo} {authController} />
