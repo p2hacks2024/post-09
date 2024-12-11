@@ -32,6 +32,7 @@
     "sharp-ico": "0.1.5"
   },
   "dependencies": {
+    "@spotify/web-api-ts-sdk": "^1.2.0",
     "googleapis": "^144.0.0"
   }
 }

@@ -10,7 +10,7 @@
 	let authInfo: AuthInfo | null = null;
 	let authController: AuthController = new AuthController();
 
-	const defaultScene = 'playing';
+	const defaultScene = 'analysis';
 
 	let scene = defaultScene;
 
