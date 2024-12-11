@@ -9,6 +9,7 @@ from models.activity import Activity
 from storage.json_storage import JsonStorage
 
 from analysis.analysis import Analysis, AnalysisInput, AnalysisOutput, BaseOutput
+from suggester.suggester import Suggester, SuggesterInput, SuggesterOutput
 
 app = FastAPI()
 
@@ -28,6 +29,7 @@ app.add_middleware(
 async def root():
     return {"message": greet()}
 
+
 @app.post("/analysis/{user_id}")
 async def analysis(user_id: str):
     storge = JsonStorage("test_data/test_activities.json")
@@ -39,8 +41,19 @@ async def analysis(user_id: str):
         "per_year": output.per_year.dict(),
         "per_month": output.per_month.dict(),
         "per_week": output.per_week.dict(),
-        "per_day": output.per_day.dict()
+        "per_day": output.per_day.dict(),
     }
+
+
+@app.post("/suggester/{user_id}", response_model=SuggesterOutput)
+async def suggester(user_id: str) -> SuggesterOutput:
+    storge = JsonStorage("test_data/test_activities.json")
+    activities = storge.read_user_activities(user_id)
+    input = SuggesterInput(emotion="sad", prompt="Help me!!!!", activities=activities)
+    suggester = Suggester(input=input)
+    output = suggester.llm_runner()
+    return output
+
 
 if __name__ == "__main__":
     uvicorn.run(app)
