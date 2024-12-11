@@ -45,7 +45,7 @@ async def analysis(user_id: str):
     }
 
 
-@app.get("/suggester", response_model=SuggesterOutput)
+@app.post("/suggester", response_model=SuggesterOutput)
 async def suggester(input: SuggesterInput) -> SuggesterOutput:
     suggester = Suggester(input=input)
     output = suggester.llm_runner()
