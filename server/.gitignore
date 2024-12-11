@@ -6,8 +6,17 @@ dist/
 wheels/
 *.egg-info
 
+# envfile
+.env
+
 # venv
 .venv
 
 # vscode
-.vscode/
+.vscode
+
+#LLMのファイルをgitignore
+*.gguf
+
+# .cache
+.cache

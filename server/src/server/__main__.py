@@ -17,7 +17,7 @@ load_dotenv(verbose=True)
 # Allow CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[str(os.environ.get("http://localhost:8000/"))],
+    allow_origins=[str(os.environ.get("FRONTEND_ORIGIN"))],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
