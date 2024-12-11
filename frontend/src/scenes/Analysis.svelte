@@ -7,7 +7,7 @@
 	export let authInfo: AuthInfo | null;
 	export let authController: AuthController;
 
-	let analysis: any;
+	let analysis: any = undefined;
 
 	$: if (authInfo?.signedIn()) {
 		//const userId = authInfo?.getUserId();
@@ -74,9 +74,15 @@
 <div class="h-full text-fwhite flex flex-col justify-center">
 	<h1 class="text-4xl font-bold">記録</h1>
 	<p class="text-lg">記録A...</p>
-	<DrawBox boxId="0" createElementFunc={createDrawElement} />
+	<DrawBox boxId="0" createElementFunc={createDrawElement} {analysis} />
 	<p class="text-lg">記録B...</p>
-	<DrawBox boxId="1" hasBorder={true} heightClass="h-20" createElementFunc={createDrawElement2} />
+	<DrawBox
+		boxId="1"
+		hasBorder={true}
+		heightClass="h-20"
+		createElementFunc={createDrawElement2}
+		{analysis}
+	/>
 
 	<p class="text-2">{JSON.stringify(analysis)}</p>
 </div>
