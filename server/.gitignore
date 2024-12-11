@@ -6,11 +6,11 @@ dist/
 wheels/
 *.egg-info
 
+# envfile
+.env
+
 # venv
 .venv
-
-# .env
-.env
 
 # vscode
 .vscode
