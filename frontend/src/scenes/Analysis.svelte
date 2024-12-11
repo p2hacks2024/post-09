@@ -12,7 +12,7 @@
 		console.log(authInfo?.getUserId());
 		analysis = new Promise(async (resolve) => {
 			const asis = await fetch(
-				`${import.meta.env.VITE_API_SERVER_URL}/analysis/${authInfo?.getUserId()}`,
+				`${import.meta.env.VITE_API_SERVER_URL}analysis/${authInfo?.getUserId()}`,
 				{
 					method: 'GET',
 					headers: {
