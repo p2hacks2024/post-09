@@ -87,7 +87,7 @@
 			<PressButton
 				type="sub"
 				onClick={() => {
-					scene = 'analysis';
+					scene = 'satisfied';
 				}}>落ち着けました</PressButton
 			>
 		</div>

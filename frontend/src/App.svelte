@@ -6,6 +6,8 @@
 	import Analysis from './scenes/Analysis.svelte';
 	import Playing from './scenes/Playing.svelte';
 	import Choice from './scenes/Choice.svelte';
+	import Screen from './components/Screen.svelte';
+	import Satisfied from './scenes/Satisfied.svelte';
 
 	let authInfo: AuthInfo | null = null;
 	let authController: AuthController = new AuthController();
@@ -23,26 +25,24 @@
 	});
 </script>
 
-<main class="main-bg h-screen">
+<Screen {scene}>
 	{#if scene === 'analysis'}
 		<Analysis {authInfo} {authController} bind:scene />
 	{:else if scene === 'choice'}
 		<Choice {authInfo} {authController} bind:scene />
 	{:else if scene === 'playing'}
 		<Playing {authInfo} {authController} bind:scene />
+	{:else if scene === 'satisfied'}
+		<Satisfied bind:scene />
 	{:else}
 		<Title {authInfo} {authController} bind:scene />
 	{/if}
-</main>
+</Screen>
 
 <PWABadge />
 
 <style>
 	:global(body) {
 		@apply font-sans text-fprimary;
-	}
-
-	.main-bg {
-		background-image: linear-gradient(-15deg, #7f2c85 0%, #4f307a 40% 70%, #193c9c 100%);
 	}
 </style>
