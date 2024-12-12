@@ -147,7 +147,7 @@ class DBStorage(Storage):
             for music in activity.musics:
                 self.c.execute(
                     """
-                    INSERT INTO musics (activity_id, acousticness) VALUES (?, ?)
+                    INSERT INTO musics (activity_id, name, genre, id) VALUES (?, ?, ?, ?)
                 """,
                     (activity_id, music.name, music.genre, music.id),
                 )
