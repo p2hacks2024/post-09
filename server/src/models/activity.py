@@ -9,6 +9,7 @@ class Music(BaseModel):
 
     name: str
     genre: str
+    album: str
     id: str
 
 
