@@ -7,10 +7,10 @@ class Music(BaseModel):
     Spotify APIで取得できる楽曲情報
     """
 
-    name: str
-    genre: str
-    album: str
-    id: str
+    track_name: str
+    track_id: str
+    album_id: str
+    popularity: int
 
 
 class Activity(BaseModel):
