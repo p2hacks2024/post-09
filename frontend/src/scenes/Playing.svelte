@@ -3,6 +3,7 @@
 	import Player from '../components/Player.svelte';
 	import PlaylistButton from '../components/PlaylistButton.svelte';
 	import PressButton from '../components/PressButton.svelte';
+	import Typewriter from '../components/Typewriter.svelte';
 	import Window from '../components/Window.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 
@@ -67,6 +68,7 @@
 </script>
 
 <Window>
+	<div class="text-lg m-b-3"><Typewriter text="このような音楽はどうでしょうか？" /></div>
 	{#if chosenTrack}
 		<div class="w-full flex flex-col gap-6">
 			<Player track={chosenTrack ? chosenTrack.id : undefined} />

@@ -2,6 +2,7 @@
 	import AccountConfig from '../components/AccountConfig.svelte';
 	import ChoiceButton from '../components/ChoiceButton.svelte';
 	import PressButton from '../components/PressButton.svelte';
+	import Typewriter from '../components/Typewriter.svelte';
 	import Window from '../components/Window.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 
@@ -18,7 +19,9 @@
 
 <Window>
 	<div class="max-w-120 w-full flex flex-col gap-5">
-		<div class="text-lg">あなたのフラッシュバックについて教えてください</div>
+		<div class="text-lg">
+			<Typewriter text="あなたが思い出した嫌な出来事について教えてください" />
+		</div>
 		<div>
 			<div>現れた感情</div>
 
