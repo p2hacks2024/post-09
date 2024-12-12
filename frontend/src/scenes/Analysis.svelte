@@ -47,8 +47,8 @@
 
 	function createDrawElement(root: HTMLCanvasElement) {
         const scene = new THREE.Scene();
-		const canvasWidth = root.clientWidth;
-		const canvasHeight = root.clientHeight;
+		const canvasWidth = root.clientWidth * 0.7;
+		const canvasHeight = root.clientHeight * 0.7;
 		const camera = new THREE.OrthographicCamera(
 			0, canvasWidth, // left, right
 			canvasHeight, 0, // top, bottom
@@ -76,12 +76,15 @@
 		console.log(root.clientWidth, root.clientHeight)
         // ヒストグラムのバーを作成
 		const barNum = Object.keys(emotion_table).length;
-		const barSpacing = 10.0;
-		const barWidth = (canvasWidth - barSpacing * (barNum - 1)) /barNum;  // バーの幅を計算
+		const barSpacing = 5.0;
+		const barWidth = (canvasWidth - barSpacing * (barNum + 1)) /barNum;  // バーの幅を計算
         const maxBarHeight = canvasHeight * 0.8;  // バーの最大高さをキャンバスの高さに基づいて設定
 
 		console.log("barWidth", barWidth, "barSpacing", barSpacing, "maxBarHeight", maxBarHeight)
 		
+		const fontSize = canvasWidth * 0.03;  // テキストのフォントサイズを設定
+		console.log("fontSize", fontSize);
+
 		const maxValue = Math.max(...Object.values(emotionFreq));
 		Object.entries(emotion_table).forEach(([emotion, emotion_text], index) => {
 			const value = emotionFreq[emotion] || 0;  // emotionFreq から値を取得、存在しない場合は 0
@@ -89,27 +92,31 @@
             const geometry = new THREE.PlaneGeometry(barWidth, barHeight);
 			const material = new THREE.MeshBasicMaterial({ color: 0x00cccc });
 			const bar = new THREE.Mesh(geometry, material);
-			bar.position.x = index * (barWidth + barSpacing) + barWidth/2;
+			bar.position.x = index * (barWidth + barSpacing) + barWidth/2 + barSpacing;
             bar.position.y = barHeight / 2 + 50;  // バーの中心をキャンバスの中央に配置
 			scene.add(bar);
 			console.log("pos",bar.position.x, bar.position.y)
 			
 			// 感情ラベルを追加
             const loader = new FontLoader();
-            loader.load('../public/fonts/IBMPlexSansJP_Regular.json', function (font) {
+            loader.load('fonts/IBMPlexSansJP_Regular.json', function (font) {
                 const textGeometry = new TextGeometry(emotion_text, {
                     font: font,
-                    size: 0.2,
+                    size: fontSize,
                     depth: 0.05,
                     curveSegments: 50  // ここでテキストの滑らかさを向上させる
                 });
+                textGeometry.computeBoundingBox();  // バウンディングボックスを計算
+				const textWidth = textGeometry.boundingBox ? textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x : 0;  // テキストの横幅を計算
+                const textHeight = textGeometry.boundingBox ? textGeometry.boundingBox.max.y - textGeometry.boundingBox.min.y : 0;  // テキストの縦幅を計算
+				console.log("Text width:", textWidth, "Text height:", textHeight);
+
                 const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
                 const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-                textMesh.position.x = bar.position.x;
-				textMesh.position.y = 0;
+                textMesh.position.x = bar.position.x - textWidth / 2;  // テキストを中央に配置
+                textMesh.position.y = 50 - textHeight;  // バーの下に配置
                 scene.add(textMesh);
             });
-			
 		});
 
         const animate = function () {
