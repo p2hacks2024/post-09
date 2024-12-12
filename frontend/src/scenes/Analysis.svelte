@@ -95,8 +95,6 @@
 			}}>タイトルに戻る</PressButton
 		>
 	</div>
-
-	<p class="text-5">{JSON.stringify(analysis)}</p>
 </Window>
 
 <AccountConfig {authInfo} {authController} />

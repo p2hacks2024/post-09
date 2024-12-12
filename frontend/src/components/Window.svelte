@@ -3,7 +3,7 @@
 </script>
 
 <div class="h-screen overflow-y-auto p-5 flex flex-col items-center">
-	<div class="text-fwhite animation-fadein w-fit m-x-auto m-y-auto max-w-120">
+	<div class="text-fwhite animation-fadein w-full m-x-auto m-y-auto max-w-120">
 		{#if noBackground}
 			<slot />
 		{:else}
