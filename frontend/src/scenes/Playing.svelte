@@ -85,6 +85,7 @@
 				{/each}
 			</div>
 			<PressButton
+				type="sub"
 				onClick={() => {
 					scene = 'analysis';
 				}}>落ち着けました</PressButton

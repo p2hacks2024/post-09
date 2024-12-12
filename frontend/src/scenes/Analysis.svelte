@@ -74,7 +74,7 @@
 	}
 </script>
 
-<Window noBackground={true}>
+<Window>
 	<h1 class="text-4xl font-bold">記録</h1>
 	<p class="text-lg">記録A...</p>
 	<DrawBox boxId="0" createElementFunc={createDrawElement} {analysis} />
@@ -89,13 +89,14 @@
 
 	<div class="m-x-auto m-y-5">
 		<PressButton
+			type="sub"
 			onClick={() => {
 				scene = 'title';
 			}}>タイトルに戻る</PressButton
 		>
 	</div>
 
-	<p class="text-2">{JSON.stringify(analysis)}</p>
+	<p class="text-5">{JSON.stringify(analysis)}</p>
 </Window>
 
 <AccountConfig {authInfo} {authController} />

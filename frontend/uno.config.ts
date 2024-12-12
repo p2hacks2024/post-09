@@ -30,6 +30,8 @@ export default defineConfig({
 
             pressButtonBorder: '#0a0',
             pressButtonBorderHover: '#0ac',
+            pressSubButtonBorder: '#80c',
+            pressSubButtonBorderHover: '#05c',
 
             windowBack: '#1113',
         },

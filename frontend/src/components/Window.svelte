@@ -2,14 +2,18 @@
 	export let noBackground: boolean = false;
 </script>
 
-<div class="flex flex-col justify-center h-full text-fwhite animation-fadein">
-	{#if noBackground}
-		<slot />
-	{:else}
-		<div class="bg-windowBack p-10 rounded-lg shadow-lg flex flex-col items-center justify-center">
+<div class="h-screen overflow-y-auto p-5 flex flex-col items-center">
+	<div class="text-fwhite animation-fadein w-fit m-x-auto m-y-auto max-w-120">
+		{#if noBackground}
 			<slot />
-		</div>
-	{/if}
+		{:else}
+			<div
+				class="bg-windowBack p-10 rounded-lg shadow-lg flex flex-col items-center justify-center"
+			>
+				<slot />
+			</div>
+		{/if}
+	</div>
 </div>
 
 <style>
