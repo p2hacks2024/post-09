@@ -11,7 +11,6 @@
                     "musics": [
                         {
                             "track_name": "RUNNING IN THE 90S",
-                            "": "eurobeat",
                             "track_id": "7E2YQaP6JcZYUb4MqadEnq",
                             "album_id": "7E2YQaP6JcZYUb4MqadEnq",
                             "popularity": 94
@@ -24,10 +23,11 @@
                     "prompt": "配属アンケート書き忘れた夢",
                     "situation": "悪夢を見た",
                     "musics": [
-                         {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
+                        {
+                            "track_name": "RUNNING IN THE 90S",
+                            "track_id": "7E2YQaP6JcZYUb4MqadEnq",
+                            "album_id": "7E2YQaP6JcZYUb4MqadEnq",
+                            "popularity": 94
                         }
                     ]
                 }
@@ -42,7 +42,7 @@
                     "prompt": "締切の日に間に合わなかった",
                     "situation": "締切を超過",
                     "musics": [
-                       {
+                        {
                             "name": "RUNNING IN THE 90S",
                             "genre": "eurobeat",
                             "id": "7E2YQaP6JcZYUb4MqadEnq"

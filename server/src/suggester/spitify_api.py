@@ -22,7 +22,7 @@ def get_music_id(query: str) -> List[Music]:  # pyright: ignore
     )
 
     musics: List[Music] = []
-    results = sp.search(q=query, limit=2, type="track")  # pyright: ignore
+    results = sp.search(q=query, limit=5, type="track")  # pyright: ignore
     for track in results["tracks"]["items"]:  # pyright: ignore
         track_name = str(track["name"])  # pyright: ignore
         track_id = str(track["id"])  # pyright: ignore
