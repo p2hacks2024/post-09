@@ -87,22 +87,9 @@ export class AuthController {
 	async checkAuthorized(): Promise<AuthInfo> {
 		const accessToken = this.accessToken();
 		if (accessToken) {
-			let response = new Promise((resolve, _reject) => {
-				const xhr = new XMLHttpRequest();
-				xhr.open('GET', 'https://api.spotify.com/v1/me?' + 'access_token=' + accessToken);
-				let signinFunc = this.oauth2SignIn;
-				xhr.onreadystatechange = function (_) {
-					if (xhr.readyState === 4 && xhr.status === 200) {
-						resolve(JSON.parse(xhr.responseText));
-					} else if (xhr.readyState === 4 && xhr.status === 401) {
-						signinFunc();
-					}
-				};
-				xhr.send(null);
-			});
-			return response
-				.then((resp) => {
-					const data = resp as any;
+			return fetch('https://api.spotify.com/v1/me' + '?access_token=' + accessToken)
+				.then((response) => response.json())
+				.then((data) => {
 					return new AuthInfo(true, data.display_name, data.id, accessToken);
 				})
 				.catch((_) => {
