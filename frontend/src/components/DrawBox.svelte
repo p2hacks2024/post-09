@@ -16,7 +16,7 @@
 		canvas.classList.add(heightClass);
 	});
 
-	$: if (analysis) {
+	$: if (analysis && canvas) {
 		const domElement = createElementFunc(canvas);
 		canvas.innerHTML = '';
 		canvas.appendChild(domElement);
