@@ -5,6 +5,8 @@
 	import * as THREE from 'three';
 	import Window from '../components/Window.svelte';
 	import PressButton from '../components/PressButton.svelte';
+	import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+	import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 	export let authInfo: AuthInfo | null;
 	export let authController: AuthController;
@@ -32,29 +34,91 @@
 				console.error(e);
 			});
 	}
+	const emotion_table: { [key: string]: string } = {
+		"envious": "嫉妬",
+		"disgusting": "嫌悪",
+		"asshamed": "恥",
+		"lonely": "孤独感",
+		"angry": "怒り",
+		"anxious": "不安",
+		"fear": "恐怖",
+		"complicated": "複雑"
+	} 
 
-	// 参考: Three.js
 	function createDrawElement(root: HTMLCanvasElement) {
-		const scene = new THREE.Scene();
-		const camera = new THREE.PerspectiveCamera(40, root.clientWidth / root.clientHeight, 0.1, 100);
-		const renderer = new THREE.WebGLRenderer({ alpha: true });
+        const scene = new THREE.Scene();
+		const canvasWidth = root.clientWidth;
+		const canvasHeight = root.clientHeight;
+		const camera = new THREE.OrthographicCamera(
+			0, canvasWidth, // left, right
+			canvasHeight, 0, // top, bottom
+			-1000, 1000 // near, far
+		);
+		const renderer = new THREE.WebGLRenderer({ alpha: true , antialias: true });
 
-		renderer.setSize(root.clientWidth, root.clientHeight);
-		camera.position.z = 5;
+		renderer.setPixelRatio(window.devicePixelRatio * 2);
+        renderer.setSize(root.clientWidth, root.clientHeight);
 
-		const geometry = new THREE.PlaneGeometry(1, 1);
-		const material = new THREE.MeshBasicMaterial({ color: 0x00cccc });
-		const plane = new THREE.Mesh(geometry, material);
+        // ヒストグラムデータ
+		const emotionFreq: { [key: string]: number } = analysis["per_total"]["emotion_freq"];
+		console.log(emotionFreq["sad"] || 0)
+        const emotion_table = {
+            "envious": "嫉妬",
+            "disgusting": "嫌悪",
+            "asshamed": "恥",
+            "lonely": "孤独感",
+            "angry": "怒り",
+            "anxious": "不安",
+            "fear": "恐怖",
+            "complicated": "複雑"
+        };
 
-		scene.add(plane);
+		console.log(root.clientWidth, root.clientHeight)
+        // ヒストグラムのバーを作成
+		const barNum = Object.keys(emotion_table).length;
+		const barSpacing = 10.0;
+		const barWidth = (canvasWidth - barSpacing * (barNum - 1)) /barNum;  // バーの幅を計算
+        const maxBarHeight = canvasHeight * 0.8;  // バーの最大高さをキャンバスの高さに基づいて設定
 
-		const animate = function () {
-			renderer.render(scene, camera);
-		};
-		renderer.setAnimationLoop(animate);
+		console.log("barWidth", barWidth, "barSpacing", barSpacing, "maxBarHeight", maxBarHeight)
+		
+		const maxValue = Math.max(...Object.values(emotionFreq));
+		Object.entries(emotion_table).forEach(([emotion, emotion_text], index) => {
+			const value = emotionFreq[emotion] || 0;  // emotionFreq から値を取得、存在しない場合は 0
+			const barHeight = (value / maxValue) * maxBarHeight;  // バーの高さを計算
+            const geometry = new THREE.PlaneGeometry(barWidth, barHeight);
+			const material = new THREE.MeshBasicMaterial({ color: 0x00cccc });
+			const bar = new THREE.Mesh(geometry, material);
+			bar.position.x = index * (barWidth + barSpacing) + barWidth/2;
+            bar.position.y = barHeight / 2 + 50;  // バーの中心をキャンバスの中央に配置
+			scene.add(bar);
+			console.log("pos",bar.position.x, bar.position.y)
+			
+			// 感情ラベルを追加
+            const loader = new FontLoader();
+            loader.load('../public/fonts/IBMPlexSansJP_Regular.json', function (font) {
+                const textGeometry = new TextGeometry(emotion_text, {
+                    font: font,
+                    size: 0.2,
+                    depth: 0.05,
+                    curveSegments: 50  // ここでテキストの滑らかさを向上させる
+                });
+                const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                textMesh.position.x = bar.position.x;
+				textMesh.position.y = 0;
+                scene.add(textMesh);
+            });
+			
+		});
 
-		return renderer.domElement;
-	}
+        const animate = function () {
+            renderer.render(scene, camera);
+        };
+        renderer.setAnimationLoop(animate);
+
+        return renderer.domElement;
+    }
 
 	// 参考: Canvas2D
 	function createDrawElement2(root: HTMLCanvasElement) {
