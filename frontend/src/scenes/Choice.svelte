@@ -2,6 +2,7 @@
 	import AccountConfig from '../components/AccountConfig.svelte';
 	import ChoiceButton from '../components/ChoiceButton.svelte';
 	import PressButton from '../components/PressButton.svelte';
+	import Window from '../components/Window.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 
 	export let authInfo: AuthInfo | null;
@@ -15,7 +16,7 @@
 	const emotions = ['怒り', '恐怖', '不安', '悲しみ', '寂しさ', '嫉妬心'];
 </script>
 
-<div class="h-full text-fwhite flex flex-col items-center justify-center">
+<Window>
 	<div class="max-w-120 w-full flex flex-col gap-5">
 		<div class="text-lg">あなたのフラッシュバックについて教えてください</div>
 		<div>
@@ -49,6 +50,6 @@
 			}}>音楽を開始</PressButton
 		>
 	</div>
-</div>
+</Window>
 
 <AccountConfig {authInfo} {authController} />

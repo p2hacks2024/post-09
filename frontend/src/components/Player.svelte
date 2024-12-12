@@ -1,13 +1,27 @@
 <script lang="ts">
-	export let track: string;
+	import { onMount } from 'svelte';
+
+	export let track: string | undefined = undefined;
+	let iframeElement: HTMLIFrameElement;
+
+	$: if (track && iframeElement) {
+		iframeElement.src = `https://open.spotify.com/embed/track/${track}?utm_source=generator&theme=0`;
+		let rootPlayer = document.getElementById('root-player');
+		if (rootPlayer) {
+			rootPlayer.innerHTML = '';
+			rootPlayer.appendChild(iframeElement);
+		}
+	}
+
+	onMount(() => {
+		iframeElement = document.createElement('iframe');
+		iframeElement.style.borderRadius = '12px';
+		iframeElement.width = '100%';
+		iframeElement.height = '152';
+		iframeElement.allow =
+			'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+		iframeElement.loading = 'lazy';
+	});
 </script>
 
-<iframe
-	style="border-radius:12px"
-	src={`https://open.spotify.com/embed/track/${track}?utm_source=generator&theme=0`}
-	width="100%"
-	height="152"
-	frameBorder="0"
-	allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-	loading="lazy"
-></iframe>
+<div id="root-player"></div>

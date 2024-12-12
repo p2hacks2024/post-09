@@ -2,7 +2,7 @@
 	export let category: string;
 	export let selected: boolean;
 	export let onClick: () => void;
-	$: bgClass = selected ? 'bg-buttonOrange hover:bg-buttonOrangeHover' : 'bg-buttonBack';
+	$: bgClass = selected ? 'bg-buttonOrangeHover' : 'bg-buttonBack';
 	$: borderClass = selected
 		? 'border-buttonOrange'
 		: 'border-buttonBorder hover:border-buttonOrange';

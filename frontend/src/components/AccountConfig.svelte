@@ -5,7 +5,7 @@
 	export let authController: AuthController;
 </script>
 
-<p class="text-right text-sm absolute top-0 right-0 p-2">
+<p class="text-right text-md absolute top-0 right-0 p-2">
 	<span class="text-fwhite">
 		{authInfo?.signedIn() ? 'Spotify ID: ' + authInfo?.getName() : ''}
 	</span>

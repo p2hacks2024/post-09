@@ -1,8 +1,9 @@
-import { defineConfig, presetUno, presetWebFonts, transformerDirectives, transformerVariantGroup } from 'unocss'
+import { defineConfig, presetIcons, presetUno, presetWebFonts, transformerDirectives, transformerVariantGroup } from 'unocss'
 
 export default defineConfig({
     presets: [
         presetUno(),
+        presetIcons(),
         presetWebFonts({
             provider: 'google',
             fonts: {
@@ -19,7 +20,6 @@ export default defineConfig({
             spotify: '#1DB954',
             spotifydark: '#195424',
 
-
             entryBack: '#1118',
             entryBorder: '#aaa',
             buttonBack: '#1118',
@@ -30,6 +30,8 @@ export default defineConfig({
 
             pressButtonBorder: '#0a0',
             pressButtonBorderHover: '#0ac',
+
+            windowBack: '#1113',
         },
     },
 
