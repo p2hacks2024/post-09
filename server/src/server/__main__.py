@@ -9,7 +9,7 @@ from models.activity import Activity
 from storage.json_storage import JsonStorage
 
 from analysis.analysis import Analysis, AnalysisInput, AnalysisOutput, BaseOutput
-from suggester.suggester import Suggester, SuggesterInput, SuggesterOutput
+from suggester.suggester_core import Suggester, SuggesterInput, SuggesterOutput
 
 app = FastAPI()
 
