@@ -1,17 +1,27 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	export let scene: string;
-	let opacity = 0;
+	let cover0: HTMLElement | undefined = undefined;
+
+	onMount(() => {
+		cover0 = document.getElementById('cover0');
+	});
 
 	$: if (scene === 'analysis' || scene === 'satisfied') {
-		opacity = 100;
+		if (cover0) {
+			cover0.style.opacity = '1';
+		}
 	} else {
-		opacity = 0;
+		if (cover0) {
+			cover0.style.opacity = '0';
+		}
 	}
 </script>
 
 <main class="shared main-bg">
-	<div id="cover1" class={`shared cover mainwave-bg animation-wave`}></div>
-	<div id="cover0" class={`shared cover satisfied-bg opacity-${opacity}`}></div>
+	<div id="cover1" class="shared cover mainwave-bg animation-wave"></div>
+	<div id="cover0" class="shared cover satisfied-bg"></div>
 	<slot />
 </main>
 
@@ -29,11 +39,11 @@
 	}
 
 	.mainwave-bg {
-		background-image: linear-gradient(-15deg, #322c85 0%, #3b4788 30% 60%, #4a218b 100%);
+		background-image: linear-gradient(-15deg, #3f2c85 0%, #3b4788 30% 60%, #4a218b 100%);
 	}
 
 	.satisfied-bg {
-		background-image: linear-gradient(-15deg, rgb(86, 87, 161) 0%, #3b6d8f 30% 60%, #4a8f77 100%);
+		background-image: linear-gradient(-15deg, rgb(89, 122, 165) 0%, #3b6d8f 40% 60%, #4a8f77 100%);
 	}
 
 	.animation-wave {

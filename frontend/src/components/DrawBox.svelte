@@ -23,4 +23,4 @@
 	}
 </script>
 
-<div class="w-100 overflow-hidden bg-transparent" id={`canvas${boxId}`}></div>
+<div class="w-80 overflow-hidden bg-transparent" id={`canvas${boxId}`}></div>
