@@ -15,7 +15,6 @@ class Suggester(BaseModel):
         prompt = SuggesterInput.prompt
         response = emotion_analyzer.analyze_emotion(prompt)
         musics = emotion_analyzer.get_ids(response.music_query)
-        # output = SuggesterOutput(situation=result, comment=result)
         output = emotion_analyzer.get_suggester_output(musics, response)
 
         # dummuy output
