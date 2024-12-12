@@ -61,6 +61,7 @@ h11==0.14.0
 httpcore==1.0.7
     # via httpx
 httpx==0.28.1
+    # via langgraph-sdk
     # via langsmith
 httpx-sse==0.4.0
     # via langchain-community
@@ -80,18 +81,26 @@ jsonpatch==1.33
     # via langchain-core
 jsonpointer==3.0.0
     # via jsonpatch
-langchain==0.3.10
+langchain==0.3.11
     # via langchain-community
     # via server
 langchain-community==0.3.10
     # via server
-langchain-core==0.3.22
+langchain-core==0.3.24
     # via langchain
     # via langchain-community
     # via langchain-text-splitters
+    # via langgraph
+    # via langgraph-checkpoint
     # via server
 langchain-text-splitters==0.3.2
     # via langchain
+langgraph==0.2.59
+    # via server
+langgraph-checkpoint==2.0.8
+    # via langgraph
+langgraph-sdk==0.1.43
+    # via langgraph
 langsmith==0.1.147
     # via langchain
     # via langchain-community
@@ -102,6 +111,8 @@ markupsafe==3.0.2
     # via jinja2
 marshmallow==3.23.1
     # via dataclasses-json
+msgpack==1.1.0
+    # via langgraph-checkpoint
 multidict==6.1.0
     # via aiohttp
     # via yarl
@@ -112,6 +123,7 @@ numpy==2.1.3
     # via langchain-community
     # via llama-cpp-python
 orjson==3.10.12
+    # via langgraph-sdk
     # via langsmith
 packaging==24.2
     # via huggingface-hub
