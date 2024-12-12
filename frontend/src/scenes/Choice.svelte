@@ -18,7 +18,7 @@
 </script>
 
 <Window>
-	<div class="max-w-120 w-full flex flex-col gap-5">
+	<div class="w-full flex flex-col gap-5">
 		<div class="text-lg">
 			<Typewriter text="あなたが思い出した嫌な出来事について教えてください" />
 		</div>

@@ -1,4 +1,4 @@
-const AUTH_SCOPES = ['user-read-email', 'user-read-private'];
+const AUTH_SCOPES = ['user-read-email'];
 
 export class AuthInfo {
 	private isSignedIn: boolean;

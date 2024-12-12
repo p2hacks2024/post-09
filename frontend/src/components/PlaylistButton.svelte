@@ -12,8 +12,8 @@
 </script>
 
 <button class="shared {bgClass} {borderClass}" on:click={onClick}>
-	<div class="flex gap-5 items-center">
-		<div class="font-bold w-5">{key + 1}</div>
+	<div class="flex gap-5 items-center text-wrap">
+		<div class="font-bold max-w-5">{key + 1}</div>
 		<div class="text-left">
 			<div class="font-bold text-lg">{name}</div>
 			<div class="text-sm">{artist}, {album}</div>
