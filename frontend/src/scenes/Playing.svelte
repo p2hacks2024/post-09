@@ -2,11 +2,13 @@
 	import AccountConfig from '../components/AccountConfig.svelte';
 	import Player from '../components/Player.svelte';
 	import PlaylistButton from '../components/PlaylistButton.svelte';
+	import PressButton from '../components/PressButton.svelte';
 	import Window from '../components/Window.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 
 	export let authInfo: AuthInfo | null;
 	export let authController: AuthController;
+	export let scene: string;
 
 	type Track = {
 		id: string;
@@ -82,6 +84,11 @@
 					>
 				{/each}
 			</div>
+			<PressButton
+				onClick={() => {
+					scene = 'analysis';
+				}}>落ち着けました</PressButton
+			>
 		</div>
 	{:else}
 		<div class="text-4xl m-auto text-center bg-transparent animate-spin">

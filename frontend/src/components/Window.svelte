@@ -1,7 +1,15 @@
-<div class="flex flex-col items-center justify-center h-full text-fwhite animation-fadein">
-	<div class="bg-windowBack p-10 rounded-lg shadow-lg flex flex-col items-center justify-center">
+<script lang="ts">
+	export let noBackground: boolean = false;
+</script>
+
+<div class="flex flex-col justify-center h-full text-fwhite animation-fadein">
+	{#if noBackground}
 		<slot />
-	</div>
+	{:else}
+		<div class="bg-windowBack p-10 rounded-lg shadow-lg flex flex-col items-center justify-center">
+			<slot />
+		</div>
+	{/if}
 </div>
 
 <style>

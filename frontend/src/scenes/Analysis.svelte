@@ -3,9 +3,12 @@
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
 	import DrawBox from '../components/DrawBox.svelte';
 	import * as THREE from 'three';
+	import Window from '../components/Window.svelte';
+	import PressButton from '../components/PressButton.svelte';
 
 	export let authInfo: AuthInfo | null;
 	export let authController: AuthController;
+	export let scene: string;
 
 	let analysis: any = undefined;
 
@@ -71,7 +74,7 @@
 	}
 </script>
 
-<div class="h-full text-fwhite flex flex-col justify-center">
+<Window noBackground={true}>
 	<h1 class="text-4xl font-bold">記録</h1>
 	<p class="text-lg">記録A...</p>
 	<DrawBox boxId="0" createElementFunc={createDrawElement} {analysis} />
@@ -84,7 +87,15 @@
 		{analysis}
 	/>
 
+	<div class="m-x-auto m-y-5">
+		<PressButton
+			onClick={() => {
+				scene = 'title';
+			}}>タイトルに戻る</PressButton
+		>
+	</div>
+
 	<p class="text-2">{JSON.stringify(analysis)}</p>
-</div>
+</Window>
 
 <AccountConfig {authInfo} {authController} />

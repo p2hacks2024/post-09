@@ -25,11 +25,11 @@
 
 <main class="main-bg h-screen overflow-hidden p-5">
 	{#if scene === 'analysis'}
-		<Analysis {authInfo} {authController} />
+		<Analysis {authInfo} {authController} bind:scene />
 	{:else if scene === 'choice'}
 		<Choice {authInfo} {authController} bind:scene />
 	{:else if scene === 'playing'}
-		<Playing {authInfo} {authController} />
+		<Playing {authInfo} {authController} bind:scene />
 	{:else}
 		<Title {authInfo} {authController} bind:scene />
 	{/if}
