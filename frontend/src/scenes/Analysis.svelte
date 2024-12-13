@@ -107,23 +107,6 @@
 
         return renderer.domElement;
     }
-
-	// 参考: Canvas2D
-	function createDrawElement2(root: HTMLCanvasElement) {
-		const canvas = document.createElement('canvas');
-		canvas.width = root.clientWidth;
-		canvas.height = root.clientHeight;
-		const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-		if (!ctx) {
-			throw new Error('Failed to get 2D context');
-		}
-
-		// draw simple rectangle
-		ctx.fillStyle = '#cc00cc';
-		ctx.fillRect(canvas.width / 4, canvas.height / 4, canvas.width / 2, canvas.height / 2);
-
-		return canvas;
-	}
 </script>
 
 <Window>
@@ -131,13 +114,6 @@
 	<p class="text-lg">記録A...</p>
 	<DrawBox boxId="0" createElementFunc={createDrawElement} {analysis} />
 	<p class="text-lg">記録B...</p>
-	<DrawBox
-		boxId="1"
-		hasBorder={true}
-		heightClass="h-20"
-		createElementFunc={createDrawElement2}
-		{analysis}
-	/>
 
 	<div class="m-x-auto m-y-5">
 		<PressButton
