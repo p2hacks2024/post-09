@@ -42,24 +42,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "user_id": "0002",
-            "activities": [
-                {
-                    "timestamp": "2024-12-09T21:00:00",
-                    "emotion": "dissapointed",
-                    "prompt": "締切の日に間に合わなかった",
-                    "situation": "締切を超過",
-                    "musics": [
-                        {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                }
-            ]
         }
     ]
 }
