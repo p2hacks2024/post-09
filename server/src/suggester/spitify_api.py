@@ -1,7 +1,6 @@
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import spotipy  # pyright: ignore
 from spotipy.oauth2 import SpotifyClientCredentials  # pyright: ignore
-import json  # pyright: ignore
 import os
 from typing import List
 from models.activity import Music
