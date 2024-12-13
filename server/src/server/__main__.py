@@ -57,7 +57,7 @@ class SuggesterRequest(BaseModel):
 @app.post("/suggester/{user_id}", response_model=SuggesterOutput)
 async def suggester(user_id: str, api_input: SuggesterRequest) -> SuggesterOutput:
     # load db
-    storage = JsonStorage("test_data/test_activities.json")
+    storage = DBStorage("db/test_activities.db")
     activities = storage.read_user_activities(user_id)
 
     # run llm
