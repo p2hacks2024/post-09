@@ -6,6 +6,8 @@
 	import * as THREE from 'three';
 	import Window from '../components/Window.svelte';
 	import PressButton from '../components/PressButton.svelte';
+	import ChoiceButton from '../components/ChoiceButton.svelte';
+	import DrawSituationList from '../components/DrawSituationList.svelte';
 	import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 	import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
@@ -14,6 +16,9 @@
 	export let scene: string;
 
 	let analysis: any = undefined;
+
+	const emotions = Object.values(emotionTable);
+	let chosenEmotion = '';
 
 	$: if (authInfo?.signedIn()) {
 		//const userId = authInfo?.getUserId();
@@ -107,6 +112,19 @@
 
         return renderer.domElement;
     }
+	
+	function createSituationList(){
+		let emotion_to_recent_situation = analysis["per_total"]["emotion_to_recent_situation"];
+		console.log("createSituationList: ",analysis["per_total"]);
+		console.log("createSituationList: ",emotion_to_recent_situation);
+		let emo = Object.keys(emotionTable).find((key) => 
+			emotionTable[key as keyof typeof emotionTable] === chosenEmotion
+		);
+		console.log(emo);
+		let situations = emo ? emotion_to_recent_situation[emo] : [];
+		console.log(situations);
+		return situations;
+	}
 </script>
 
 <Window>
@@ -114,6 +132,20 @@
 	<p class="text-lg">記録A...</p>
 	<DrawBox boxId="0" createElementFunc={createDrawElement} {analysis} />
 	<p class="text-lg">記録B...</p>
+
+	<div class="flex justify-start w-full gap-4 flex-wrap">
+		{#each emotions as emotion}
+			<ChoiceButton
+				category={emotion}
+				selected={emotion === chosenEmotion}
+				onClick={() => {
+					chosenEmotion = emotion;
+				}}
+			/>
+		{/each}
+	</div>
+
+	<DrawSituationList createSituationList={createSituationList} {chosenEmotion} />
 
 	<div class="m-x-auto m-y-5">
 		<PressButton
