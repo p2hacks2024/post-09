@@ -8,8 +8,10 @@
 	import PressButton from '../components/PressButton.svelte';
 	import SelectButton from '../components/SelectButton.svelte';
 	import DrawSituationList from '../components/DrawSituationList.svelte';
+	import DrawBarGraph from '../components/DrawBarGraph.svelte';
 	import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 	import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+	import { get } from 'svelte/store';
 
 	export let authInfo: AuthInfo | null;
 	export let authController: AuthController;
@@ -122,6 +124,23 @@
 		console.log(situations);
 		return situations;
 	}
+
+	function getEmotionFreq(){
+		const emotionFreq: {key: string, value: number}[] = [];
+		
+		emotions.forEach((emotion) => {
+			let freq :number = analysis["per_total"]["emotion_freq"][emotion];
+			if(freq == undefined){
+				freq = 0;
+			}
+			console.log("freq", freq, emotion);
+			emotionFreq.push({key: emotion, value: freq});
+		});
+		console.log("emotionFreq", emotionFreq);
+		//console.log("mainn", analysis["per_total"]["emotion_freq"]);
+		//const emotionFreq: {key: string, value: number}[] = analysis["per_total"]["emotion_freq"];
+		return emotionFreq;
+	}
 </script>
 
 <Window>
@@ -144,6 +163,7 @@
 
 	<DrawSituationList createSituationList={createSituationList} {chosenEmotion} />	
 	
+	<DrawBarGraph getEmotionFreq={getEmotionFreq} {analysis} />
 	<div class="m-x-auto m-y-5">
 		<PressButton
 			type="sub"
