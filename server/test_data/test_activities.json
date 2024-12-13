@@ -5,7 +5,7 @@
             "activities": [
                 {
                     "timestamp": "2024-12-09T09:00:00",
-                    "emotion": "envious",
+                    "emotion": "嫉妬",
                     "prompt": "傘を大学に忘れてしまった",
                     "situation": "忘れ物",
                     "musics": [
@@ -18,7 +18,7 @@
                 },
                 {
                     "timestamp": "2024-12-10T11:00:00",
-                    "emotion": "envious",
+                    "emotion": "嫉妬",
                     "prompt": "配属アンケート書き忘れた夢",
                     "situation": "悪夢を見た",
                     "musics": [
@@ -31,7 +31,7 @@
                 },
                 {
                     "timestamp": "2024-12-10T12:00:00",
-                    "emotion": "angry",
+                    "emotion": "怒り",
                     "prompt": "配属アンケート書き忘れた夢",
                     "situation": "悪夢を見た",
                     "musics": [
@@ -44,7 +44,7 @@
                 },
                 {
                     "timestamp": "2024-12-10T10:01:00",
-                    "emotion": "complicated",
+                    "emotion": "恥",
                     "prompt": "配属アンケート書き忘れた夢",
                     "situation": "悪夢を見た",
                     "musics": [
@@ -57,7 +57,7 @@
                 },
                 {
                     "timestamp": "2024-12-10T10:01:00",
-                    "emotion": "lonely",
+                    "emotion": "孤独感",
                     "prompt": "配属アンケート書き忘れた夢",
                     "situation": "悪夢を見た",
                     "musics": [
@@ -75,7 +75,7 @@
             "activities": [
                 {
                     "timestamp": "2024-12-09T21:00:00",
-                    "emotion": "dissapointed",
+                    "emotion": "嫌悪",
                     "prompt": "締切の日に間に合わなかった",
                     "situation": "締切を超過",
                     "musics": [
