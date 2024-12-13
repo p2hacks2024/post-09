@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AccountConfig from '../components/AccountConfig.svelte';
 	import type { AuthInfo, AuthController } from '../lib/oauth/spotify';
+	import { emotionTable } from '../lib/emotionTable';
 	import DrawBox from '../components/DrawBox.svelte';
 	import * as THREE from 'three';
 	import Window from '../components/Window.svelte';
@@ -34,16 +35,6 @@
 				console.error(e);
 			});
 	}
-	const emotion_table: { [key: string]: string } = {
-		"envious": "嫉妬",
-		"disgusting": "嫌悪",
-		"asshamed": "恥",
-		"lonely": "孤独感",
-		"angry": "怒り",
-		"anxious": "不安",
-		"fear": "恐怖",
-		"complicated": "複雑"
-	} 
 
 	function createDrawElement(root: HTMLCanvasElement) {
         const scene = new THREE.Scene();
@@ -62,7 +53,7 @@
         // ヒストグラムデータ
 		const emotionFreq: { [key: string]: number } = analysis["per_total"]["emotion_freq"];
 		console.log(emotionFreq["sad"] || 0)
-        const emotion_table = {
+        const emotionTable = {
             "envious": "嫉妬",
             "disgusting": "嫌悪",
             "asshamed": "恥",
@@ -75,7 +66,7 @@
 
 		console.log(root.clientWidth, root.clientHeight)
         // ヒストグラムのバーを作成
-		const barNum = Object.keys(emotion_table).length;
+		const barNum = Object.keys(emotionTable).length;
 		const barSpacing = 5.0;
 		const barWidth = (canvasWidth - barSpacing * (barNum + 1)) /barNum;  // バーの幅を計算
         const maxBarHeight = canvasHeight * 0.8;  // バーの最大高さをキャンバスの高さに基づいて設定
@@ -86,7 +77,7 @@
 		console.log("fontSize", fontSize);
 
 		const maxValue = Math.max(...Object.values(emotionFreq));
-		Object.entries(emotion_table).forEach(([emotion, emotion_text], index) => {
+		Object.entries(emotionTable).forEach(([emotion, emotion_text], index) => {
 			const value = emotionFreq[emotion] || 0;  // emotionFreq から値を取得、存在しない場合は 0
 			const barHeight = (value / maxValue) * maxBarHeight;  // バーの高さを計算
             const geometry = new THREE.PlaneGeometry(barWidth, barHeight);
