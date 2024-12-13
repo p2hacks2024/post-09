@@ -320,9 +320,10 @@ class DBStorage(Storage):
         """
         print("update_user_activities")
         if not self._is_exist_user(user_id):
-            raise ValueError(f"User {user_id} does NOT exist.")
+            self._insert_user(user_id)
+            self._insert_activities(user_id, activities)
         elif not self._is_exist_activity(user_id):
-            raise ValueError(f"User {user_id} does NOT have any activities.")
+            self._insert_activities(user_id, activities)
 
         self._update_activities(user_id, activities)
         self.conn.commit()
