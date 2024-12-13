@@ -32,9 +32,10 @@ class DBStorage(Storage):
         CREATE TABLE IF NOT EXISTS musics (
             music_id INTEGER PRIMARY KEY AUTOINCREMENT,
             activity_id INTEGER,
-            name TEXT,
-            genre TEXT,
-            id TEXT,
+            track_name TEXT,
+            track_id TEXT,
+            album_id TEXT,
+            popularity INTEGER,
             FOREIGN KEY (activity_id) REFERENCES activities (activity_id)
         )
         """)
@@ -65,7 +66,8 @@ class DBStorage(Storage):
         """,
             (user_id,),
         )
-        pass
+        print("INSERT")
+        self.conn.commit()
 
     def _delete_user(self, user_id: str):
         # user_idをDBから削除
@@ -75,7 +77,6 @@ class DBStorage(Storage):
         """,
             (user_id,),
         )
-        pass
 
     def _is_exist_activity(self, user_id: str) -> bool:
         # user_idに対してactivitiesが存在するか確認
@@ -109,7 +110,12 @@ class DBStorage(Storage):
             musics: List[Music] = []
             for music_row in self.c.fetchall():
                 musics.append(
-                    Music(name=music_row[2], genre=music_row[3], id=music_row[4])
+                    Music(
+                        track_name=music_row[2],
+                        track_id=music_row[3],
+                        album_id=music_row[4],
+                        popularity=music_row[5],
+                    )
                 )
             activity = Activity(
                 timestamp=activity_row[2],
@@ -147,9 +153,20 @@ class DBStorage(Storage):
             for music in activity.musics:
                 self.c.execute(
                     """
-                    INSERT INTO musics (activity_id, name, genre, id) VALUES (?, ?, ?, ?)
+                    INSERT INTO musics (
+                        activity_id,
+                        track_name, 
+                        track_id, 
+                        album_id,
+                        popularity) VALUES (?, ?, ?, ?, ?)
                 """,
-                    (activity_id, music.name, music.genre, music.id),
+                    (
+                        activity_id,
+                        music.track_name,
+                        music.track_id,
+                        music.album_id,
+                        music.popularity,
+                    ),
                 )
 
     def _update_activities(self, user_id: str, new_activities: List[Activity]):
@@ -193,17 +210,19 @@ class DBStorage(Storage):
                     self.c.execute(
                         """
                         UPDATE musics
-                        SET name = ?
-                        SET genre = ?
-                        SET id = ?
+                        SET track_name = ?,
+                            track_id = ?,
+                            album_id = ?,
+                            popularity = ?
                         WHERE activity_id = (
                             SELECT activity_id FROM activities WHERE user_id = ? AND timestamp = ?
                         )
                     """,
                         (
-                            new_music.name,
-                            new_music.genre,
-                            new_music.id,
+                            new_music.track_name,
+                            new_music.track_id,
+                            new_music.album_id,
+                            new_music.popularity,
                             user_id,
                             new_activity.timestamp,
                         ),
@@ -226,9 +245,20 @@ class DBStorage(Storage):
                 for new_music in new_activity.musics:
                     self.c.execute(
                         """
-                        INSERT INTO musics (activity_id, name, genre, id) VALUES (?, ?, ?, ?)
+                        INSERT INTO musics (
+                            activity_id, 
+                            track_name, 
+                            track_id, 
+                            album_id,
+                            popularity) VALUES (?, ?, ?, ?, ?)
                     """,
-                        (activity_id, new_music.name, new_music.genre, new_music.id),
+                        (
+                            activity_id,
+                            new_music.track_name,
+                            new_music.track_id,
+                            new_music.album_id,
+                            new_music.popularity,
+                        ),
                     )
 
     def _delete_activities(self, user_id: str):
@@ -250,7 +280,7 @@ class DBStorage(Storage):
         Create: activitiesをDBに新規追加
         user_idが存在しない場合 -> user_idをDBに新規追加, activitiesをDBに新規追加
         user_idが存在するがactivitiesが存在しない場合 -> activitiesをDBに新規追加
-        user_idが存在しactivitiesも存在する場合 -> 既に存在するためエラーを返す
+        user_idが存在しactivitiesも存在する場合 -> update
         """
         if not self._is_exist_user(user_id):
             # user_idが存在しない場合
@@ -263,9 +293,8 @@ class DBStorage(Storage):
             self._insert_activities(user_id, activities)  # activitiesをDBに新規追加
         else:
             # user_idが存在しactivitiesも存在する場合
-            raise ValueError(
-                f"User {user_id}s activities already exists."
-            )  # 既に存在するためエラーを返す
+            print("user_id:", user_id, "is exist and activities is exist.")
+            self.update_user_activities(user_id, activities)
         self.conn.commit()
 
     def read_user_activities(self, user_id: str) -> List[Activity]:
@@ -274,6 +303,7 @@ class DBStorage(Storage):
         user_idが存在しない場合 -> 空のリストを返す
         user_idが存在するがactivitiesが存在しない場合 -> 空のリストを返す
         """
+        print("read_user_activities")
         # user_idが既に存在するか確認
         if not self._is_exist_user(user_id) or not self._is_exist_activity(user_id):
             print("user_id:", user_id, "is not exist.")
@@ -288,10 +318,12 @@ class DBStorage(Storage):
         user_idが存在するがactivitiesが存在しない場合 -> エラーを返す
         user_idが存在しactivitiesも存在する場合 -> activitiesをDBに更新
         """
+        print("update_user_activities")
         if not self._is_exist_user(user_id):
-            raise ValueError(f"User {user_id} does NOT exist.")
+            self._insert_user(user_id)
+            self._insert_activities(user_id, activities)
         elif not self._is_exist_activity(user_id):
-            raise ValueError(f"User {user_id} does NOT have any activities.")
+            self._insert_activities(user_id, activities)
 
         self._update_activities(user_id, activities)
         self.conn.commit()
@@ -303,6 +335,7 @@ class DBStorage(Storage):
         user_idが存在するがactivitiesが存在しない場合 -> エラーを返す
         user_idが存在しactivitiesも存在する場合 -> activitiesをDBから削除
         """
+        print("delete_user_activities")
         if not self._is_exist_user(user_id):
             # user_idが存在しない場合 -> 何もしない
             return

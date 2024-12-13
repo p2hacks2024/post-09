@@ -1,16 +1,17 @@
 import os
 from dotenv import load_dotenv
 from pydantic import BaseModel
-from models.activity import Activity
+from models.activity import Activity  # pyright:ignore
 from utils.lib import greet  # pyright:ignore
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from storage.json_storage import JsonStorage  # pyright:ignore
-from analysis.analysis import Analysis, AnalysisInput
-from suggester.suggester_models import SuggesterInput, SuggesterOutput
-from suggester.suggester_core import Suggester
+from storage.db_storage import DBStorage  # pyright:ignore
+from analysis.analysis import Analysis, AnalysisInput  # pyright:ignore
+from suggester.suggester_models import SuggesterInput, SuggesterOutput  # pyright:ignore
+from suggester.suggester_core import Suggester  # pyright:ignore
 from datetime import datetime
 
 app = FastAPI()
@@ -34,7 +35,7 @@ async def root():
 
 @app.post("/analysis/{user_id}")
 async def analysis(user_id: str):
-    storage = JsonStorage("test_data/test_activities.json")
+    storage = DBStorage("db/test_activities.db")
     activities = storage.read_user_activities(user_id)
     input = AnalysisInput(activities=activities)
     output = Analysis(input).output()
@@ -56,7 +57,7 @@ class SuggesterRequest(BaseModel):
 @app.post("/suggester/{user_id}", response_model=SuggesterOutput)
 async def suggester(user_id: str, api_input: SuggesterRequest) -> SuggesterOutput:
     # load db
-    storage = JsonStorage("test_data/test_activities.json")
+    storage = DBStorage("db/test_activities.db")
     activities = storage.read_user_activities(user_id)
 
     # run llm
