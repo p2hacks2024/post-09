@@ -1,3 +1,4 @@
+from operator import ne
 import sqlite3
 from typing import List
 
@@ -32,9 +33,10 @@ class DBStorage(Storage):
         CREATE TABLE IF NOT EXISTS musics (
             music_id INTEGER PRIMARY KEY AUTOINCREMENT,
             activity_id INTEGER,
-            name TEXT,
-            genre TEXT,
-            id TEXT,
+            track_name TEXT,
+            track_id TEXT,
+            album_id TEXT,
+            popularity INTEGER,
             FOREIGN KEY (activity_id) REFERENCES activities (activity_id)
         )
         """)
@@ -109,7 +111,12 @@ class DBStorage(Storage):
             musics: List[Music] = []
             for music_row in self.c.fetchall():
                 musics.append(
-                    Music(name=music_row[2], genre=music_row[3], id=music_row[4])
+                    Music(
+                        track_name=music_row[2],
+                        track_id=music_row[3],
+                        album_id=music_row[4],
+                        popularity=music_row[5],
+                    )
                 )
             activity = Activity(
                 timestamp=activity_row[2],
@@ -147,9 +154,20 @@ class DBStorage(Storage):
             for music in activity.musics:
                 self.c.execute(
                     """
-                    INSERT INTO musics (activity_id, name, genre, id) VALUES (?, ?, ?, ?)
+                    INSERT INTO musics (
+                        activity_id,
+                        track_name, 
+                        track_id, 
+                        album_id,
+                        popularity) VALUES (?, ?, ?, ?, ?)
                 """,
-                    (activity_id, music.name, music.genre, music.id),
+                    (
+                        activity_id,
+                        music.track_name,
+                        music.track_id,
+                        music.album_id,
+                        music.popularity,
+                    ),
                 )
 
     def _update_activities(self, user_id: str, new_activities: List[Activity]):
@@ -193,19 +211,19 @@ class DBStorage(Storage):
                     self.c.execute(
                         """
                         UPDATE musics
-                        SET name = ?
-                        SET genre = ?
-                        SET id = ?
+                        SET track_name = ?
+                        SET track_id = ?
+                        SET album_id = ?
+                        SET popularity = ?
                         WHERE activity_id = (
                             SELECT activity_id FROM activities WHERE user_id = ? AND timestamp = ?
                         )
                     """,
                         (
-                            new_music.name,
-                            new_music.genre,
-                            new_music.id,
-                            user_id,
-                            new_activity.timestamp,
+                            new_music.track_name,
+                            new_music.track_id,
+                            new_music.album_id,
+                            new_music.popularity,
                         ),
                     )
             else:
@@ -226,9 +244,20 @@ class DBStorage(Storage):
                 for new_music in new_activity.musics:
                     self.c.execute(
                         """
-                        INSERT INTO musics (activity_id, name, genre, id) VALUES (?, ?, ?, ?)
+                        INSERT INTO musics (
+                            activity_id, 
+                            track_name, 
+                            track_id, 
+                            album_id,
+                            popularity) VALUES (?, ?, ?, ?, ?)
                     """,
-                        (activity_id, new_music.name, new_music.genre, new_music.id),
+                        (
+                            activity_id,
+                            new_music.track_name,
+                            new_music.track_id,
+                            new_music.album_id,
+                            new_music.popularity,
+                        ),
                     )
 
     def _delete_activities(self, user_id: str):
