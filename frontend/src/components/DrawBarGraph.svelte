@@ -7,32 +7,40 @@
     //let emotions :string[]= [];
     //let freq :number[] = [];
     let maxValue = 1;
-    let keys: string[] = [];
-    let values: number[] = [];
+    let emotions: string[] = [];
+    let freqs: number[] = [];
 
     $: if(analysis){
         emotion_freq = getEmotionFreq();
-        //emotions = Object.keys(emotion_freq);
-        //freq = Object.values(emotion_freq);
         
         console.log("maxValue", maxValue);
 
-        keys = emotion_freq.map(item => item.key);
-        values = emotion_freq.map(item => item.value);
-        console.log("values", values);
-        console.log("emotions", keys);
-        maxValue = Math.max(...values);
+        emotions = emotion_freq.map(item => item.key);
+        freqs = emotion_freq.map(item => item.value);
+        console.log("values", freqs);
+        console.log("emotions", emotions);
+        maxValue = Math.max(...freqs);
     }
 </script>
 
-<div class="flex flex-col gap-4 p-4 w-full">
-    {#each values as value}
-      <div class="box rounded h-[10px]" style="width: {value/maxValue * 100}%"></div>
+<div class="flex flex-col gap-1 p-4 w-full">
+    {#each freqs as freq, i}
+        <div class="flex justify-between">
+            <p>{emotions[i]}</p>
+            <p>{freq}</p>
+        </div>
+        <div class="relative h-[10px] w-full">
+            <div class="box2 absolute inset-0 rounded h-full bg-gray-200"></div>
+            <div class="box absolute inset-0 rounded h-full bg-blue-500" style="width: {freq / maxValue * 100}%"></div>
+        </div>
     {/each}
 </div>
 
 <style>
     .box:empty {
-        @apply bg-blue-300;
+        @apply bg-blue-600;
+    }
+    .box2:empty {
+        @apply bg-gray-600;
     }
 </style>
