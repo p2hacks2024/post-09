@@ -17,8 +17,12 @@ class SuggesterInput(BaseModel):
 class SuggesterOutput(BaseModel):
     """
     Suggesterの出力情報
+    musics: List[Music]
+    summary: str
+    comment: str
     """
 
     musics: List[Music]
+    emotion: str
     summary: str
     comment: str
