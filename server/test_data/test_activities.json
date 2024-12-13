@@ -4,63 +4,17 @@
             "user_id": "0001",
             "activities": [
                 {
-                    "timestamp": "2024-12-09T09:00:00",
-                    "emotion": "envious",
-                    "prompt": "傘を大学に忘れてしまった",
-                    "situation": "忘れ物",
+                    "timestamp": "2024-12-13T18:41:02",
+                    "emotion": "孤独感",
+                    "prompt": "家に誰もいない。自分ひとりだけ",
+                    "situation": "家に誰もいないという状況で、非常に孤独感を感じています。",
                     "musics": [
                         {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T11:00:00",
-                    "emotion": "envious",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
-                        {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T12:00:00",
-                    "emotion": "angry",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
-                        {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T10:01:00",
-                    "emotion": "complicated",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
-                        {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T10:01:00",
-                    "emotion": "lonely",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
+                            "track_name": "落ち着く",
+                            "track_id": "0ec72kCFavzd7g2GUw6Wyj",
+                            "album_id": "4pSyxrUy6RehnWVZbt5GD6",
+                            "popularity": 9
+                        },
                         {
                             "track_name": "孤独感",
                             "track_id": "1CQieUmFj5dzn2vJFeWXAk",
