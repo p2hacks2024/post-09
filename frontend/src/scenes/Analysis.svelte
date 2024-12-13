@@ -146,7 +146,7 @@
 <Window>
 	<h1 class="text-4xl font-bold">記録</h1>
 	<p class="text-lg">記録A...</p>
-	<DrawBox boxId="0" createElementFunc={createDrawElement} {analysis} />
+	<DrawBarGraph getEmotionFreq={getEmotionFreq} {analysis} />
 	<p class="text-lg">記録B...</p>
 
 	<div class="flex justify-start w-full gap-1 flex-wrap">
@@ -163,7 +163,7 @@
 
 	<DrawSituationList createSituationList={createSituationList} {chosenEmotion} />	
 	
-	<DrawBarGraph getEmotionFreq={getEmotionFreq} {analysis} />
+	
 	<div class="m-x-auto m-y-5">
 		<PressButton
 			type="sub"

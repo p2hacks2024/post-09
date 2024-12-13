@@ -23,7 +23,7 @@
     }
 </script>
 
-<div class="flex flex-col gap-1 p-4 w-full">
+<div class="flex flex-col gap-1 p-1 w-full">
     {#each freqs as freq, i}
         <div class="flex justify-between">
             <p>{emotions[i]}</p>
