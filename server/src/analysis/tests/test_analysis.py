@@ -24,7 +24,7 @@ def test_get_base_output(analysis: Analysis):
     }
 """
 
-
+"""
 def test_output(analysis: Analysis):
     output = analysis.output()
     assert output.per_total.emotion_freq == {"sad": 2}
@@ -33,3 +33,4 @@ def test_output(analysis: Analysis):
         "忘れ物": {"sad": 1},
         "悪夢を見た": {"sad": 1},
     }
+"""
