@@ -5,7 +5,7 @@ from models.activity import Activity, Music  # pyright: ignore
 
 @pytest.fixture
 def db_storage() -> DBStorage:
-    return DBStorage("./db/test_activitites.db")
+    return DBStorage("./db/test_activities.db")
 
 
 def user_id() -> str:
