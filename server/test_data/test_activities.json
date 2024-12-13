@@ -10,7 +10,9 @@
                     "situation": "忘れ物",
                     "musics": [
                         {
-                            "acousticness": 0.5
+                            "name": "RUNNING IN THE 90S",
+                            "genre": "eurobeat",
+                            "id": "7E2YQaP6JcZYUb4MqadEnq"
                         }
                     ]
                 },
@@ -54,7 +56,9 @@
                     "situation": "悪夢を見た",
                     "musics": [
                         {
-                            "acousticness": 0.5
+                            "name": "RUNNING IN THE 90S",
+                            "genre": "eurobeat",
+                            "id": "7E2YQaP6JcZYUb4MqadEnq"
                         }
                     ]
                 }
@@ -70,7 +74,9 @@
                     "situation": "締切を超過",
                     "musics": [
                         {
-                            "acousticness": 0.5
+                            "name": "RUNNING IN THE 90S",
+                            "genre": "eurobeat",
+                            "id": "7E2YQaP6JcZYUb4MqadEnq"
                         }
                     ]
                 }
