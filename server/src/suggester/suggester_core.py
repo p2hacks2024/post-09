@@ -1,7 +1,7 @@
 import os
 from langchain_community.chat_models import ChatLlamaCpp
 from langchain_core.prompts import PromptTemplate
-from pydantic import BaseModel, Field, field_validator, conlist
+from pydantic import BaseModel, Field, field_validator
 from typing import List, Literal
 from suggester.spitify_api import get_music_id
 from models.activity import Music
@@ -90,8 +90,6 @@ class Suggester:
         response: EmotionAnalysis = self.chain.invoke(  # pyright: ignore
             {"statement": self.suggester_input.prompt}
         )
-        print("fooo")
-        print(response.music_query)
         musics: List[Music] = get_music_id(response.music_query)  # pyright: ignore
         output = SuggesterOutput(
             musics=musics,

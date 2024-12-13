@@ -67,7 +67,7 @@ async def suggester(user_id: str, api_input: SuggesterRequest) -> SuggesterOutpu
     output = suggester.llm_runner()
     # write db
     activity_this_time = Activity(
-        timestamp=str(datetime.now().isoformat()),
+        timestamp=str(datetime.now().replace(microsecond=0).isoformat()),
         prompt=api_input.prompt,
         emotion=output.emotion,
         situation=output.summary,
