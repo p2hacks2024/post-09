@@ -1,4 +1,3 @@
-from operator import ne
 import sqlite3
 from typing import List
 

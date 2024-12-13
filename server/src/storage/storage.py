@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from models.activity import Activity
+from models.activity import Activity  # pyright: ignore
+
 
 class Storage(ABC):
-    '''
+    """
     CRUD操作を提供する抽象クラス
-    '''
+    """
+
     @abstractmethod
     def create_user_activities(self, user_id: str, activities: List[Activity]):
         pass
