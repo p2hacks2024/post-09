@@ -6,7 +6,7 @@
 	import * as THREE from 'three';
 	import Window from '../components/Window.svelte';
 	import PressButton from '../components/PressButton.svelte';
-	import ChoiceButton from '../components/ChoiceButton.svelte';
+	import SelectButton from '../components/SelectButton.svelte';
 	import DrawSituationList from '../components/DrawSituationList.svelte';
 	import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 	import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
@@ -18,6 +18,7 @@
 	let analysis: any = undefined;
 
 	const emotions = Object.values(emotionTable);
+	const emotions_selection = emotions;
 	let chosenEmotion = '';
 
 	$: if (authInfo?.signedIn()) {
@@ -72,30 +73,31 @@
 		console.log("fontSize", fontSize);
 
 		const maxValue = Math.max(...Object.values(emotionFreq));
-		Object.entries(emotionTable).forEach(([emotion, emotion_text], index) => {
-			const value = emotionFreq[emotion] || 0;  // emotionFreq から値を取得、存在しない場合は 0
-			const barHeight = (value / maxValue) * maxBarHeight;  // バーの高さを計算
+		
+		// emotionTable の各要素に対してバーを作成
+        emotions.forEach((emotion, index) => {
+            const value = emotionFreq[emotion] || 0;  // emotionFreq から値を取得、存在しない場合は 0
+            const barHeight = (value / maxValue) * maxBarHeight;  // バーの高さを計算
             const geometry = new THREE.PlaneGeometry(barWidth, barHeight);
-			const material = new THREE.MeshBasicMaterial({ color: 0x00cccc });
-			const bar = new THREE.Mesh(geometry, material);
-			bar.position.x = index * (barWidth + barSpacing) + barWidth/2 + barSpacing;
-            bar.position.y = barHeight / 2 + 50;  // バーの中心をキャンバスの中央に配置
-			scene.add(bar);
-			console.log("pos",bar.position.x, bar.position.y)
-			
-			// 感情ラベルを追加
+            const material = new THREE.MeshBasicMaterial({ color: 0x00cccc });
+            const bar = new THREE.Mesh(geometry, material);
+            bar.position.x = index * (barWidth + barSpacing) + barWidth / 2 + barSpacing;
+            bar.position.y = barHeight / 2 + 50;
+            scene.add(bar);
+
+            // 感情ラベルを追加
             const loader = new FontLoader();
             loader.load('fonts/IBMPlexSansJP_Regular.json', function (font) {
-                const textGeometry = new TextGeometry(emotion_text, {
+                const textGeometry = new TextGeometry(emotion, {
                     font: font,
                     size: fontSize,
-                    depth: 0.05,
+                    height: 0.05,
                     curveSegments: 50  // ここでテキストの滑らかさを向上させる
                 });
                 textGeometry.computeBoundingBox();  // バウンディングボックスを計算
-				const textWidth = textGeometry.boundingBox ? textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x : 0;  // テキストの横幅を計算
+                const textWidth = textGeometry.boundingBox ? textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x : 0;  // テキストの横幅を計算
                 const textHeight = textGeometry.boundingBox ? textGeometry.boundingBox.max.y - textGeometry.boundingBox.min.y : 0;  // テキストの縦幅を計算
-				console.log("Text width:", textWidth, "Text height:", textHeight);
+                console.log("Text width:", textWidth, "Text height:", textHeight);
 
                 const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
                 const textMesh = new THREE.Mesh(textGeometry, textMaterial);
@@ -103,7 +105,7 @@
                 textMesh.position.y = 50 - textHeight;  // バーの下に配置
                 scene.add(textMesh);
             });
-		});
+        });
 
         const animate = function () {
             renderer.render(scene, camera);
@@ -111,17 +113,12 @@
         renderer.setAnimationLoop(animate);
 
         return renderer.domElement;
-    }
+    };
 	
 	function createSituationList(){
 		let emotion_to_recent_situation = analysis["per_total"]["emotion_to_recent_situation"];
-		console.log("createSituationList: ",analysis["per_total"]);
-		console.log("createSituationList: ",emotion_to_recent_situation);
-		let emo = Object.keys(emotionTable).find((key) => 
-			emotionTable[key as keyof typeof emotionTable] === chosenEmotion
-		);
-		console.log(emo);
-		let situations = emo ? emotion_to_recent_situation[emo] : [];
+		let situations = [];
+		situations = chosenEmotion ? emotion_to_recent_situation[chosenEmotion] : [];
 		console.log(situations);
 		return situations;
 	}
@@ -133,9 +130,9 @@
 	<DrawBox boxId="0" createElementFunc={createDrawElement} {analysis} />
 	<p class="text-lg">記録B...</p>
 
-	<div class="flex justify-start w-full gap-4 flex-wrap">
-		{#each emotions as emotion}
-			<ChoiceButton
+	<div class="flex justify-start w-full gap-1 flex-wrap">
+		{#each emotions_selection as emotion}
+			<SelectButton
 				category={emotion}
 				selected={emotion === chosenEmotion}
 				onClick={() => {
@@ -145,8 +142,8 @@
 		{/each}
 	</div>
 
-	<DrawSituationList createSituationList={createSituationList} {chosenEmotion} />
-
+	<DrawSituationList createSituationList={createSituationList} {chosenEmotion} />	
+	
 	<div class="m-x-auto m-y-5">
 		<PressButton
 			type="sub"
