@@ -4,85 +4,40 @@
             "user_id": "0001",
             "activities": [
                 {
-                    "timestamp": "2024-12-09T09:00:00",
-                    "emotion": "嫉妬",
-                    "prompt": "傘を大学に忘れてしまった",
-                    "situation": "忘れ物",
+                    "timestamp": "2024-12-13T20:12:04",
+                    "emotion": "不安",
+                    "prompt": "先生に「お前はどこの大学も受からないと言われた」",
+                    "situation": "大学受験の結果が心配で不安な気持ちになっている",
                     "musics": [
                         {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T11:00:00",
-                    "emotion": "嫉妬",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
+                            "track_name": "君に捧げる応援歌",
+                            "track_id": "3rrDAtJhL3K1zQgQU2wWIo",
+                            "album_id": "0s1cegnmRr8JMP3ZIZgvHQ",
+                            "popularity": 57
+                        },
                         {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T12:00:00",
-                    "emotion": "怒り",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
+                            "track_name": "前向きになる曲",
+                            "track_id": "6b5KL8YH9YSTPfyi0TCxEM",
+                            "album_id": "0fUYyqpB0bElIp63bNlr3Q",
+                            "popularity": 0
+                        },
                         {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T10:01:00",
-                    "emotion": "恥",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
+                            "track_name": "君に捧げる応援歌",
+                            "track_id": "3rrDAtJhL3K1zQgQU2wWIo",
+                            "album_id": "0s1cegnmRr8JMP3ZIZgvHQ",
+                            "popularity": 57
+                        },
                         {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                },
-                {
-                    "timestamp": "2024-12-10T10:01:00",
-                    "emotion": "孤独感",
-                    "prompt": "配属アンケート書き忘れた夢",
-                    "situation": "悪夢を見た",
-                    "musics": [
+                            "track_name": "Mood Lifters",
+                            "track_id": "2zxcmMHeRo2D1usazjeQnI",
+                            "album_id": "4CGz4MbhGkhnyIplWstSTA",
+                            "popularity": 36
+                        },
                         {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "user_id": "0002",
-            "activities": [
-                {
-                    "timestamp": "2024-12-09T21:00:00",
-                    "emotion": "嫌悪",
-                    "prompt": "締切の日に間に合わなかった",
-                    "situation": "締切を超過",
-                    "musics": [
-                        {
-                            "name": "RUNNING IN THE 90S",
-                            "genre": "eurobeat",
-                            "id": "7E2YQaP6JcZYUb4MqadEnq"
+                            "track_name": "Motivational Moods",
+                            "track_id": "5e1reQSVuO3GSMQ4uqC83q",
+                            "album_id": "5iziqQkL8CjD0g4iic9Igo",
+                            "popularity": 28
                         }
                     ]
                 }

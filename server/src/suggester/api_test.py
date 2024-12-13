@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 from langchain.tools.base import BaseTool
 import spotipy  # pyright: ignore
-from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
+from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth  # pyright: ignore
 import json
 
 # .envファイルの読み込み

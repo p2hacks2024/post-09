@@ -1,14 +1,17 @@
 import os
 from dotenv import load_dotenv
+from pydantic import BaseModel
+from models.activity import Activity
 from utils.lib import greet  # pyright:ignore
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from storage.json_storage import JsonStorage  # pyright:ignore
-
-from analysis.analysis import Analysis, AnalysisInput  # pyright:ignore
-from suggester.suggester import Suggester, SuggesterInput, SuggesterOutput  # pyright:ignore
+from analysis.analysis import Analysis, AnalysisInput
+from suggester.suggester_models import SuggesterInput, SuggesterOutput
+from suggester.suggester_core import Suggester
+from datetime import datetime
 
 app = FastAPI()
 
@@ -31,8 +34,8 @@ async def root():
 
 @app.post("/analysis/{user_id}")
 async def analysis(user_id: str):
-    storge = JsonStorage("test_data/test_activities.json")
-    activities = storge.read_user_activities(user_id)
+    storage = JsonStorage("test_data/test_activities.json")
+    activities = storage.read_user_activities(user_id)
     input = AnalysisInput(activities=activities)
     output = Analysis(input).output()
     return {
@@ -44,13 +47,39 @@ async def analysis(user_id: str):
     }
 
 
+class SuggesterRequest(BaseModel):
+    emotion: str
+    prompt: str
+
+
+# llm server: returns SuggesterOutput after writing db
 @app.post("/suggester/{user_id}", response_model=SuggesterOutput)
-async def suggester(user_id: str) -> SuggesterOutput:
-    storge = JsonStorage("test_data/test_activities.json")
-    activities = storge.read_user_activities(user_id)
-    input = SuggesterInput(emotion="sad", prompt="Help me!!!!", activities=activities)
+async def suggester(user_id: str, api_input: SuggesterRequest) -> SuggesterOutput:
+    # load db
+    storage = JsonStorage("test_data/test_activities.json")
+    activities = storage.read_user_activities(user_id)
+
+    # run llm
+    input = None
+    if api_input.emotion != "":
+        input = api_input.emotion
+    elif api_input.prompt != "":
+        input = api_input.prompt
+    input = SuggesterInput(
+        emotion=api_input.emotion, prompt=input, activities=activities
+    )
     suggester = Suggester(input=input)
     output = suggester.llm_runner()
+    # write db
+    activity_this_time = Activity(
+        timestamp=str(datetime.now().replace(microsecond=0).isoformat()),
+        prompt=api_input.prompt,
+        emotion=output.emotion,
+        situation=output.summary,
+        musics=output.musics,
+    )
+    storage.update_user_activities(user_id, [activity_this_time])
+
     return output
 
 
