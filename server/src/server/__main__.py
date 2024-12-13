@@ -1,16 +1,17 @@
 import os
 from dotenv import load_dotenv
 from pydantic import BaseModel
+from models.activity import Activity
 from utils.lib import greet  # pyright:ignore
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from storage.json_storage import JsonStorage  # pyright:ignore
-from analysis.analysis import Analysis, AnalysisInput, AnalysisOutput, BaseOutput
+from analysis.analysis import Analysis, AnalysisInput
 from suggester.suggester_models import SuggesterInput, SuggesterOutput
-from analysis.analysis import Analysis, AnalysisInput  # pyright:ignore
-from suggester.suggester_core import Suggester  # pyright:ignore
+from suggester.suggester_core import Suggester
+from datetime import datetime
 
 app = FastAPI()
 
@@ -33,8 +34,8 @@ async def root():
 
 @app.post("/analysis/{user_id}")
 async def analysis(user_id: str):
-    storge = JsonStorage("test_data/test_activities.json")
-    activities = storge.read_user_activities(user_id)
+    storage = JsonStorage("test_data/test_activities.json")
+    activities = storage.read_user_activities(user_id)
     input = AnalysisInput(activities=activities)
     output = Analysis(input).output()
     return {
@@ -51,16 +52,29 @@ class SuggesterRequest(BaseModel):
     prompt: str
 
 
-# LLMサーバー
+# llm server: returns SuggesterOutput after writing db
 @app.post("/suggester/{user_id}", response_model=SuggesterOutput)
 async def suggester(user_id: str, api_input: SuggesterRequest) -> SuggesterOutput:
-    storge = JsonStorage("test_data/test_activities.json")
-    activities = storge.read_user_activities(user_id)
+    # load db
+    storage = JsonStorage("test_data/test_activities.json")
+    activities = storage.read_user_activities(user_id)
+
+    # run llm
     input = SuggesterInput(
         emotion=api_input.emotion, prompt=api_input.prompt, activities=activities
     )
     suggester = Suggester(input=input)
     output = suggester.llm_runner()
+    # write db
+    activity_this_time = Activity(
+        timestamp=str(datetime.now().isoformat()),
+        prompt=api_input.prompt,
+        emotion=output.emotion,
+        situation=output.summary,
+        musics=output.musics,
+    )
+    storage.update_user_activities(user_id, [activity_this_time])
+
     return output
 
 
