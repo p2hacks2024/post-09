@@ -6,6 +6,7 @@ from typing import List, Literal
 from suggester.spitify_api import get_music_id
 from models.activity import Music
 from suggester.suggester_models import SuggesterInput, SuggesterOutput
+from icecream import ic  # pyright: ignore
 
 
 # ファイルパスの取得と設定
@@ -25,8 +26,11 @@ class EmotionAnalysis(BaseModel):
         description="""a comforting comment to user's episode 
         (e.g. What a sad story. I'm so sorry to here that.)""",
     )
-    emotion: Literal["lonely", "angry", "envy", "anxious", "fear", "asshamed"] = Field(
-        description="emotion (e.g. angry)"
+
+    emotion: Literal[
+        "恐怖", "恥", "悲しみ", "怒り", "嫉妬", "不安", "嫌悪", "孤独感"
+    ] = Field(
+        description="感情 (e.g. 悲しみ、怒り、嫉妬、不安、恐怖、恥、嫌悪、孤独感)"
         # pattern=r"^[A-Za-z]+$",
     )
     summary: str = Field(
@@ -39,7 +43,7 @@ class EmotionAnalysis(BaseModel):
     )
 
     # Custom validator to remove specific unwanted strings
-    @field_validator("comment")
+    @field_validator("comment", "summary")
     def remove_specific_strings(cls, value: str) -> str:
         # Remove specific characters
         unwanted_strings = ["{", "}", "\n"]
@@ -52,7 +56,6 @@ class EmotionAnalysis(BaseModel):
         return value
 
 
-# モデル設定クラス
 class Suggester:
     def __init__(self, input: SuggesterInput):
         self.suggester_input = input
@@ -62,7 +65,7 @@ class Suggester:
             n_gpu_layers=-1,
             n_ctx=1024,
             n_batch=512,
-            temperature=0.3,
+            temperature=0.5,
             verbose=True,
         )
 
@@ -71,13 +74,13 @@ class Suggester:
             template="""
                     あなたは感情分析のエキスパートです。ユーザーが体験した出来事を受けて、
                     以下のタスクを実行してください。
-                    また、出来事を一言でsummaryを書いてください。(友人との喧嘩、親に殴られた、職場での失敗)
-                    次に、出来事に対するコメントを少し長めに書いてください。このコメントには、
-                    ユーザーに対する慰めも含めてください。
-                    次に、ユーザーの出来事に基づいて一つの曲名を書いてください。
-                    次に、コメントを元にユーザーの感情を例の中から一つ出力してください。
-                    次に、今のユーザーの心理状態に適した曲を検索するために、曲検索のための
-                    単語を出力してください
+                    また、出来事を2の単語でsummaryを書いてください。
+                    次に、出来事に対するコメントを少し長めに敬語で書いてください。このコメントには、
+                    ユーザーに対する優しい言葉やアドバイスも含めてください。
+                    次に、今のユーザーの心理状態にマッチする曲を検索するために、曲検索のための
+                    日本語の単語を1トークンずつ出力してください。
+                    最後に、さきほどの曲検索のためのワードの一つをユーザーの感情として出力して
+                    ください。
                     以下がユーザーの出来事です。\n
                     {statement}
                 """,
@@ -96,6 +99,8 @@ class Suggester:
             summary=response.summary,
             comment=response.comment,
         )
+
+        ic(response.music_query)
 
         return output
 
@@ -119,3 +124,9 @@ class Suggester:
 #     ea = EmotionAnalyzer()
 #     output = ea.llm_runner("上司に怒られてしまった")
 #     print(output)
+
+"""            You must always return valid JSON fenced by a markdown 
+                    code block. Do not return any additional text."
+"""
+"""Please analyze the sentiment of the following text and classify it into ONE of the following categories:
+                      悲しみ、怒り、嫉妬、不安、恐怖、恥、嫌悪、孤独感. Provide a short explanation of why you classified the text in that way."""
