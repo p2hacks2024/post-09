@@ -57,6 +57,9 @@ class EmotionAnalysis(BaseModel):
 
 
 class Suggester:
+
+    suggester_input: SuggesterInput
+    
     def __init__(self, input: SuggesterInput):
         self.suggester_input = input
 

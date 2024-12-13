@@ -22,7 +22,6 @@
                             "popularity": 49
                         },
                         {
-<<<<<<< Updated upstream
                             "track_name": "前向きになる曲",
                             "track_id": "6b5KL8YH9YSTPfyi0TCxEM",
                             "album_id": "0fUYyqpB0bElIp63bNlr3Q",
@@ -40,38 +39,6 @@
                             "album_id": "4CGz4MbhGkhnyIplWstSTA",
                             "popularity": 36
                         },
-=======
-                            "track_name": "经过 - Off Vocal-中国語ver.男性ガイドボーカル付き",
-                            "track_id": "02GouES0DBHhH0npwamcjj",
-                            "album_id": "3Nt3gQSm3l4Alkf2slMwkX",
-                            "popularity": 7
-                        },
-                        {
-                            "track_name": "J-POPは終わらない",
-                            "track_id": "1v5BM1pdVOVHPfn6FZRwz6",
-                            "album_id": "7yMwh30JRgmqsxdFBf7TDq",
-                            "popularity": 17
-                        },
-                        {
-                            "track_name": "Miree",
-                            "track_id": "5L6U3jC9BRjre7Q4Np4usF",
-                            "album_id": "114nBwycDpuNZsYZyIySqh",
-                            "popularity": 55
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "user_id": "0002",
-            "activities": [
-                {
-                    "timestamp": "2024-12-09T21:00:00",
-                    "emotion": "dissapointed",
-                    "prompt": "締切の日に間に合わなかった",
-                    "situation": "締切を超過",
-                    "musics": [
->>>>>>> Stashed changes
                         {
                             "track_name": "Motivational Moods",
                             "track_id": "5e1reQSVuO3GSMQ4uqC83q",
