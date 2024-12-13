@@ -67,9 +67,10 @@
 
 <Window>
 	<h1 class="text-4xl font-bold">記録</h1>
-	<p class="text-lg">記録A...</p>
+	<p class="text-lg mt-4">感情の量</p>
 	<DrawBarGraph getEmotionFreq={getEmotionFreq} {analysis} />
-	<p class="text-lg">記録B...</p>
+	
+	<p class="text-lg mt-4">感情の素</p>
 
 	<div class="flex justify-start w-full gap-1 flex-wrap">
 		{#each emotions_selection as emotion}
