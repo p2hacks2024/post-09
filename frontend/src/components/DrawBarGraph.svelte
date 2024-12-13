@@ -19,7 +19,7 @@
         freqs = emotion_freq.map(item => item.value);
         console.log("values", freqs);
         console.log("emotions", emotions);
-        maxValue = Math.max(...freqs);
+        maxValue = Math.max(...freqs) > 0 ? Math.max(...freqs) : 1;
     }
 </script>
 
