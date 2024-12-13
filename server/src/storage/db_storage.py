@@ -66,7 +66,8 @@ class DBStorage(Storage):
         """,
             (user_id,),
         )
-        pass
+        print("INSERT")
+        self.conn.commit()
 
     def _delete_user(self, user_id: str):
         # user_idをDBから削除
@@ -76,7 +77,6 @@ class DBStorage(Storage):
         """,
             (user_id,),
         )
-        pass
 
     def _is_exist_activity(self, user_id: str) -> bool:
         # user_idに対してactivitiesが存在するか確認
@@ -293,6 +293,7 @@ class DBStorage(Storage):
             self._insert_activities(user_id, activities)  # activitiesをDBに新規追加
         else:
             # user_idが存在しactivitiesも存在する場合
+            print("user_id:", user_id, "is exist and activities is exist.")
             self.update_user_activities(user_id, activities)
         self.conn.commit()
 
@@ -302,6 +303,7 @@ class DBStorage(Storage):
         user_idが存在しない場合 -> 空のリストを返す
         user_idが存在するがactivitiesが存在しない場合 -> 空のリストを返す
         """
+        print("read_user_activities")
         # user_idが既に存在するか確認
         if not self._is_exist_user(user_id) or not self._is_exist_activity(user_id):
             print("user_id:", user_id, "is not exist.")
@@ -316,6 +318,7 @@ class DBStorage(Storage):
         user_idが存在するがactivitiesが存在しない場合 -> エラーを返す
         user_idが存在しactivitiesも存在する場合 -> activitiesをDBに更新
         """
+        print("update_user_activities")
         if not self._is_exist_user(user_id):
             raise ValueError(f"User {user_id} does NOT exist.")
         elif not self._is_exist_activity(user_id):
@@ -331,6 +334,7 @@ class DBStorage(Storage):
         user_idが存在するがactivitiesが存在しない場合 -> エラーを返す
         user_idが存在しactivitiesも存在する場合 -> activitiesをDBから削除
         """
+        print("delete_user_activities")
         if not self._is_exist_user(user_id):
             # user_idが存在しない場合 -> 何もしない
             return
