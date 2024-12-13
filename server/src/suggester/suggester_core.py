@@ -30,8 +30,7 @@ class EmotionAnalysis(BaseModel):
         # pattern=r"^[A-Za-z]+$",
     )
     summary: str = Field(
-        description="a short summary of happening e.g. 友人との喧嘩, 仕事での失敗, 失恋],",
-        max_length=6,
+        description="a short summary of happening e.g. 友人との喧嘩, 仕事での失敗, 失恋],"
     )
     music_query: List[str] = Field(  # pyright: ignore
         description="recommended music query based on user prompt",
@@ -72,7 +71,7 @@ class Suggester:
             template="""
                     あなたは感情分析のエキスパートです。ユーザーが体験した出来事を受けて、
                     以下のタスクを実行してください。
-                    また、出来事を一言で、6文字以内でsummaryを書いてください。
+                    また、出来事を一言でsummaryを書いてください。(友人との喧嘩、親に殴られた、職場での失敗)
                     次に、出来事に対するコメントを少し長めに書いてください。このコメントには、
                     ユーザーに対する慰めも含めてください。
                     次に、ユーザーの出来事に基づいて一つの曲名を書いてください。
