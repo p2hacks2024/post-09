@@ -210,10 +210,10 @@ class DBStorage(Storage):
                     self.c.execute(
                         """
                         UPDATE musics
-                        SET track_name = ?
-                        SET track_id = ?
-                        SET album_id = ?
-                        SET popularity = ?
+                        SET track_name = ?,
+                            track_id = ?,
+                            album_id = ?,
+                            popularity = ?
                         WHERE activity_id = (
                             SELECT activity_id FROM activities WHERE user_id = ? AND timestamp = ?
                         )
@@ -223,6 +223,8 @@ class DBStorage(Storage):
                             new_music.track_id,
                             new_music.album_id,
                             new_music.popularity,
+                            user_id,
+                            new_activity.timestamp,
                         ),
                     )
             else:
@@ -278,7 +280,7 @@ class DBStorage(Storage):
         Create: activitiesをDBに新規追加
         user_idが存在しない場合 -> user_idをDBに新規追加, activitiesをDBに新規追加
         user_idが存在するがactivitiesが存在しない場合 -> activitiesをDBに新規追加
-        user_idが存在しactivitiesも存在する場合 -> 既に存在するためエラーを返す
+        user_idが存在しactivitiesも存在する場合 -> update
         """
         if not self._is_exist_user(user_id):
             # user_idが存在しない場合
@@ -291,9 +293,7 @@ class DBStorage(Storage):
             self._insert_activities(user_id, activities)  # activitiesをDBに新規追加
         else:
             # user_idが存在しactivitiesも存在する場合
-            raise ValueError(
-                f"User {user_id}s activities already exists."
-            )  # 既に存在するためエラーを返す
+            self.update_user_activities(user_id, activities)
         self.conn.commit()
 
     def read_user_activities(self, user_id: str) -> List[Activity]:
