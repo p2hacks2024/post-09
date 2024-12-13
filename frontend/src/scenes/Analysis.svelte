@@ -19,8 +19,7 @@
 	let chosenEmotion = '';
 
 	$: if (authInfo?.signedIn()) {
-		//const userId = authInfo?.getUserId();
-		const userId = '0001'; // TODO: remove this line!
+		const userId = authInfo?.getUserId();
 
 		fetch(`${import.meta.env.VITE_API_SERVER_ORIGIN}/analysis/${userId}`, {
 			method: 'POST',
@@ -38,27 +37,27 @@
 				console.error(e);
 			});
 	}
-	
-	function createSituationList(){
-		let emotion_to_recent_situation = analysis["per_total"]["emotion_to_recent_situation"];
+
+	function createSituationList() {
+		let emotion_to_recent_situation = analysis['per_total']['emotion_to_recent_situation'];
 		let situations = [];
 		situations = chosenEmotion ? emotion_to_recent_situation[chosenEmotion] : [];
 		console.log(situations);
 		return situations;
 	}
 
-	function getEmotionFreq(){
-		const emotionFreq: {key: string, value: number}[] = [];
-		
+	function getEmotionFreq() {
+		const emotionFreq: { key: string; value: number }[] = [];
+
 		emotions.forEach((emotion) => {
-			let freq :number = analysis["per_total"]["emotion_freq"][emotion];
-			if(freq == undefined){
+			let freq: number = analysis['per_total']['emotion_freq'][emotion];
+			if (freq == undefined) {
 				freq = 0;
 			}
-			console.log("freq", freq, emotion);
-			emotionFreq.push({key: emotion, value: freq});
+			console.log('freq', freq, emotion);
+			emotionFreq.push({ key: emotion, value: freq });
 		});
-		console.log("emotionFreq", emotionFreq);
+		console.log('emotionFreq', emotionFreq);
 		//console.log("mainn", analysis["per_total"]["emotion_freq"]);
 		//const emotionFreq: {key: string, value: number}[] = analysis["per_total"]["emotion_freq"];
 		return emotionFreq;
@@ -68,8 +67,8 @@
 <Window>
 	<h1 class="text-4xl font-bold">記録</h1>
 	<p class="text-lg mt-4">感情の量</p>
-	<DrawBarGraph getEmotionFreq={getEmotionFreq} {analysis} />
-	
+	<DrawBarGraph {getEmotionFreq} {analysis} />
+
 	<p class="text-lg mt-4">感情の素</p>
 
 	<div class="flex justify-start w-full gap-1 flex-wrap">
@@ -84,9 +83,8 @@
 		{/each}
 	</div>
 
-	<DrawSituationList createSituationList={createSituationList} {chosenEmotion} />	
-	
-	
+	<DrawSituationList {createSituationList} {chosenEmotion} />
+
 	<div class="m-x-auto m-y-5">
 		<PressButton
 			type="sub"

@@ -2,6 +2,9 @@
 	import * as THREE from 'three';
 	import DrawBox from './DrawBox.svelte';
 
+	export let scene: string;
+	export let playingScene: string[];
+
 	class StarGeometry {
 		num_points: number;
 		scale: number;
@@ -32,7 +35,7 @@
 	}
 
 	function createDrawElement(root: HTMLCanvasElement) {
-		const scene = new THREE.Scene();
+		const tscene = new THREE.Scene();
 		const camera = new THREE.PerspectiveCamera(30, root.clientWidth / root.clientHeight, 0.1, 80);
 		const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
@@ -55,10 +58,14 @@
 			new THREE.MeshBasicMaterial({ color: 0xddf0f0 })
 		);
 
-		scene.add(plane0);
-		scene.add(plane1);
-		scene.add(plane2);
+		tscene.add(plane0);
+		tscene.add(plane1);
+		tscene.add(plane2);
 		const animate = function () {
+			if (scene && !playingScene.includes(scene)) {
+				return;
+			}
+
 			const t = Date.now() * 0.001;
 			plane0.geometry = star0.getGeometry(t);
 			plane1.geometry = star1.getGeometry(t + 0.4);
@@ -69,7 +76,7 @@
 			plane1.rotation.z = t * 0.1 + 0.4;
 			plane2.rotation.z = t * 0.1 + 0.8;
 
-			renderer.render(scene, camera);
+			renderer.render(tscene, camera);
 		};
 		renderer.setAnimationLoop(animate);
 

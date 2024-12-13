@@ -4,24 +4,25 @@
             "user_id": "0001",
             "activities": [
                 {
-                    "timestamp": "2024-12-13T18:41:02",
-                    "emotion": "孤独感",
-                    "prompt": "家に誰もいない。自分ひとりだけ",
-                    "situation": "家に誰もいないという状況で、非常に孤独感を感じています。",
+                    "timestamp": "2024-12-13T19:56:22",
+                    "emotion": "悲しみ",
+                    "prompt": "とても悔しいです",
+                    "situation": "悔しい出来事が起きました。",
                     "musics": [
                         {
-                            "track_name": "落ち着く",
-                            "track_id": "0ec72kCFavzd7g2GUw6Wyj",
-                            "album_id": "4pSyxrUy6RehnWVZbt5GD6",
-                            "popularity": 9
+                            "track_name": "失恋ソング沢山聴いて 泣いてばかりの私はもう。",
+                            "track_id": "6UEudr7wL1kWoEzWTWOjL9",
+                            "album_id": "5ANkUMQeCcz1yLFKGwIamt",
+                            "popularity": 50
                         },
                         {
-                            "track_name": "孤独感",
-                            "track_id": "1CQieUmFj5dzn2vJFeWXAk",
-                            "album_id": "3IMl748xU2V0iijmap0n7B",
-                            "popularity": 1
+                            "track_name": "バラード",
+                            "track_id": "0UocKrxUBu1UCEfiieLe7L",
+                            "album_id": "2EXVPKHfbl3c6ZuQ32cGmI",
+                            "popularity": 49
                         },
                         {
+<<<<<<< Updated upstream
                             "track_name": "前向きになる曲",
                             "track_id": "6b5KL8YH9YSTPfyi0TCxEM",
                             "album_id": "0fUYyqpB0bElIp63bNlr3Q",
@@ -39,6 +40,38 @@
                             "album_id": "4CGz4MbhGkhnyIplWstSTA",
                             "popularity": 36
                         },
+=======
+                            "track_name": "经过 - Off Vocal-中国語ver.男性ガイドボーカル付き",
+                            "track_id": "02GouES0DBHhH0npwamcjj",
+                            "album_id": "3Nt3gQSm3l4Alkf2slMwkX",
+                            "popularity": 7
+                        },
+                        {
+                            "track_name": "J-POPは終わらない",
+                            "track_id": "1v5BM1pdVOVHPfn6FZRwz6",
+                            "album_id": "7yMwh30JRgmqsxdFBf7TDq",
+                            "popularity": 17
+                        },
+                        {
+                            "track_name": "Miree",
+                            "track_id": "5L6U3jC9BRjre7Q4Np4usF",
+                            "album_id": "114nBwycDpuNZsYZyIySqh",
+                            "popularity": 55
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "user_id": "0002",
+            "activities": [
+                {
+                    "timestamp": "2024-12-09T21:00:00",
+                    "emotion": "dissapointed",
+                    "prompt": "締切の日に間に合わなかった",
+                    "situation": "締切を超過",
+                    "musics": [
+>>>>>>> Stashed changes
                         {
                             "track_name": "Motivational Moods",
                             "track_id": "5e1reQSVuO3GSMQ4uqC83q",
