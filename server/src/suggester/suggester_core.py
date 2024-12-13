@@ -65,29 +65,27 @@ class Suggester:
             n_gpu_layers=-1,
             n_ctx=1024,
             n_batch=512,
-            temperature=0.5,
+            temperature=0.2,
             verbose=True,
         )
 
         self.question_prompt: PromptTemplate = PromptTemplate(
             input_variables=["statement"],
             template="""
-                    あなたは感情分析のエキスパートです。ユーザーが体験した出来事を受けて、
-                    以下のタスクを実行してください。
-                    最初に、ユーザーが体験した出来事を短く要約してください。
-                    友達と喧嘩、職場での失敗など
-                    次に、ユーザーの出来事に対するコメントを少し長めに敬語で書いてください。このコメントには、
-                    ユーザーに対する優しい言葉やアドバイスも含めてください。
-                    次に、今のユーザーの心理状態にマッチする曲を検索するために、曲検索のための
-                    日本語の単語をｓ出力してください。
-                    次に、さきほどの曲検索のためのワードの一つをユーザーの感情として出力して
-                    ください。
-                    以下がユーザーの出来事です。\n
+                    あなたは感情分析のエキスパートです。
+                    ユーザーは最近あった嫌な出来事もしくは感情の種類を入力します。
+                    以下の手順に従い、タスクを実行してください。
+                    ユーザーへの慰めや励ましのcommentを書いてください。
+                    ユーザーからの入力を単語にしてください。(summary)
+                    次に、ユーザーを励ますために、曲検索のためのキーワードを出力してください。
+                    次に、出来事からユーザーの感情を推測して、一つ出力してください。
                     {statement}
                 """,
         )
+
         self.structured_llm = self.llm.with_structured_output(EmotionAnalysis)  # pyright: ignore
         self.chain = self.question_prompt | self.structured_llm  # pyright: ignore
+        self.chain2 = self.question_prompt | self.llm  # pyright: ignore
 
     def llm_runner(self) -> SuggesterOutput:
         response: EmotionAnalysis = self.chain.invoke(  # pyright: ignore
@@ -105,26 +103,6 @@ class Suggester:
 
         return output
 
-    #     return response
-
-    # def analyze_emotion(self, statement: str) -> EmotionAnalysis:
-    #     response: EmotionAnalysis = self.chain.invoke({"statement": statement})  # pyright: ignore
-    #     return response
-
-    # def get_ids(self, query: str) -> List[Music]:
-    #     musics: List[Music] = get_music_id(query)
-    #     return musics
-
-    # def get_suggester_output(self, musics: List[Music], ea: EmotionAnalysis) ->SuggesterOutput:
-    #     output = SuggesterOutput(musics=musics, summary=ea.summary, comment=ea.comment)
-    #     return output
-
-
-# if __name__ == "__main__":
-#     model_path = get_model_path()
-#     ea = EmotionAnalyzer()
-#     output = ea.llm_runner("上司に怒られてしまった")
-#     print(output)
 
 """            You must always return valid JSON fenced by a markdown 
                     code block. Do not return any additional text."
