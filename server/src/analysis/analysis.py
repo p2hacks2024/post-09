@@ -31,8 +31,7 @@ class BaseOutput(BaseModel):
     """
 
     emotion_freq: dict[str, int]
-    emotion_to_situation: dict[str, List[str]]
-    situation_to_emotion_freq: dict[str, dict[str, int]]
+    emotion_to_recent_situation: dict[str, List[str]]
 
 
 class AnalysisOutput(BaseModel):
@@ -60,6 +59,17 @@ class Analysis:
             per_day=self._get_base_output("day"),
         )
 
+    def _get_sorted_activities(self) -> List[Activity]:
+        # 直近のactivitiesが前に来るようにソート
+        sorted_activities = sorted(
+            self.activities,
+            key=lambda activity: datetime.strptime(
+                activity.timestamp, "%Y-%m-%dT%H:%M:%S"
+            ),
+            reverse=True,
+        )
+        return sorted_activities
+
     def _get_base_output(self, period: str) -> BaseOutput:
         """
         期間（period: total, year, month, weekday, day）ごとのBaseOutput
@@ -67,13 +77,10 @@ class Analysis:
         now_period = getattr(datetime.now(), period) if period != "total" else None
 
         emotion_freq: defaultdict[str, int] = defaultdict(int)
-        emotion_to_situation: defaultdict[str, List[str]] = defaultdict(list)
-        situation_to_emotion_freq: defaultdict[str, defaultdict[str, int]] = (
-            defaultdict(lambda: defaultdict(int))
-        )
+        emotion_to_recent_situation: defaultdict[str, List[str]] = defaultdict(list)
 
-        # 各要素の集計
-        for activity in self.activities:
+        # 各要素の集計（ソート済み）
+        for activity in self._get_sorted_activities():
             activity_timestamp = datetime.strptime(
                 activity.timestamp, "%Y-%m-%dT%H:%M:%S"
             )
@@ -81,12 +88,13 @@ class Analysis:
                 getattr(activity_timestamp, period) if period != "total" else None
             )
             if activity_period == now_period or period == "total":
+                # 時期が一致する場合、またはtotalの場合，カウント
                 emotion_freq[activity.emotion] += 1
-                emotion_to_situation[activity.emotion].append(activity.situation)
-                situation_to_emotion_freq[activity.situation][activity.emotion] += 1
+            if len(emotion_to_recent_situation[activity.emotion]) < 2:
+                # 感情ごとの最新の出来事を2つまで保存
+                emotion_to_recent_situation[activity.emotion].append(activity.situation)
 
         return BaseOutput(
             emotion_freq=emotion_freq,
-            emotion_to_situation=emotion_to_situation,
-            situation_to_emotion_freq=dict(situation_to_emotion_freq),
+            emotion_to_recent_situation=emotion_to_recent_situation,
         )
