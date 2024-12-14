@@ -23,15 +23,19 @@
 		authController.handleAuthCallback(scene);
 		authInfo = await authController.checkAuthorized();
 	});
+
+	let chosenEmotion: string;
+	let prompt: string;
+	let alert: string;
 </script>
 
 <Screen {scene}>
 	{#if scene === 'analysis'}
 		<Analysis {authInfo} {authController} bind:scene />
 	{:else if scene === 'choice'}
-		<Choice {authInfo} {authController} bind:scene />
+		<Choice {authInfo} {authController} bind:scene bind:chosenEmotion bind:prompt bind:alert />
 	{:else if scene === 'playing'}
-		<Playing {authInfo} {authController} bind:scene />
+		<Playing {authInfo} {authController} bind:scene bind:chosenEmotion bind:prompt bind:alert />
 	{:else if scene === 'satisfied'}
 		<Satisfied bind:scene />
 	{:else}

@@ -61,13 +61,15 @@ async def suggester(user_id: str, api_input: SuggesterRequest) -> SuggesterOutpu
     activities = storage.read_user_activities(user_id)
 
     # run llm
-    input = None
-    if api_input.emotion != "":
-        input = api_input.emotion
-    elif api_input.prompt != "":
-        input = api_input.prompt
+    preinput = ""
+
+    if api_input.prompt != "":
+        preinput = api_input.prompt
+    elif api_input.emotion != "":
+        preinput = api_input.emotion
+
     input = SuggesterInput(
-        emotion=api_input.emotion, prompt=input, activities=activities
+        emotion=api_input.emotion, prompt=preinput, activities=activities
     )
     suggester = Suggester(input=input)
     output = suggester.llm_runner()
