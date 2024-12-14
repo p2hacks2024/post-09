@@ -1,5 +1,11 @@
 # P2HACKS2024 アピールシート 
 
+<div align="center">
+<img src="docs/image/top.png" alt="top"></img>
+<div style="font-size:x-large; font-weight: bold">FlushTune</div>
+<div style="font-size:medium">〜 Flashbackを音楽でFlushする 〜</div>
+</div>
+
 
 ## プロダクト名  
 FlushTune
@@ -66,12 +72,14 @@ FlushTune
 - **バックエンド開発**
 - 記録の可視化
 
+
 ## 開発における工夫した点  
 
 ### チームワーク
 
 - 複雑系コースならではの**各メンバーの高い専門性**を考慮し、それぞれの役割に注力できるよう工夫
     - ソフトウェアの各部品の**入出力を最優先で定義**
+        ![全体構成図](docs/image/architecture.webp)
         - 入出力: 関数の引数/返り値、HTTPリクエスト/レスポンスなど
     - 入出力に合わせた各部品の具体的な実装を、担当者に全面的に委任
     - コードやブランチ運用のスタイルは、PEP8やGitHubフローを意識しつつ、規則や信条で強制しない方針に
