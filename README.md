@@ -119,6 +119,8 @@ FlushTune
 
 ## 開発技術 
 
+![システム構成](docs/image/system.png)
+
 ### LLM開発
 - フレームワーク：**LangChain**
     - LLMの出力を効率的に管理 
