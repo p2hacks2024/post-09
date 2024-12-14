@@ -1,9 +1,11 @@
 # P2HACKS2024 アピールシート 
 
 <div align="center">
+</br>
+<div>FlushTune</div>
+<div>〜 Flashbackを音楽でFlushする 〜</div>
+</br>
 <img src="docs/image/top.png" alt="top"></img>
-<div style="font-size:x-large; font-weight: bold">FlushTune</div>
-<div style="font-size:medium">〜 Flashbackを音楽でFlushする 〜</div>
 </div>
 
 
