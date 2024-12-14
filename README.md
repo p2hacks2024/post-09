@@ -1,11 +1,20 @@
 # P2HACKS2024 アピールシート 
 
+<div align="center">
+</br>
+<div>FlushTune</div>
+<div>〜 Flashbackを音楽でFlushする 〜</div>
+</br>
+<img src="docs/image/top.png" alt="top"></img>
+</div>
+
+
 ## プロダクト名  
 FlushTune
 
 ## コンセプト  
 
-**「Flashbackを音楽でflushする」**
+**「Flashbackを音楽でFlushする」**
 をテーマに、ユーザーが思い出した出来事・感情を分析し、音楽の提案を行うプロダクトです。
 
 - ユーザーがふと思い出した嫌な出来事（フラッシュバック）を入力すると、FlushTuneが心理状態にマッチした楽曲を提案
@@ -20,6 +29,14 @@ FlushTune
 - 出来事や感情を言語化し、心を落ち着けるためのアドバイスをもらいたい方
 
 ## 利用の流れ  
+
+<div align="center" style="display: flex; gap: 2px">
+<img src="docs/image/scene-title.png" alt="title" width="200"></img>
+<img src="docs/image/scene-choice.png" alt="choice" width="200"></img>
+<img src="docs/image/scene-playing.png" alt="playing" width="200"></img>
+<img src="docs/image/scene-analysis.png" alt="analysis" width="200"></img>
+</div>
+
 1. FlushTuneにSpotifyアカウントでログインする
 1. ユーザーが出来事（フラッシュバック）や感情を入力
 1. LLMがユーザーの感情を分析
@@ -60,10 +77,11 @@ FlushTune
 - **フロントエンド開発**
 - システムの全体構成策定・技術選定
 
-#### moqumo
+#### 吉野 颯真 (moqumo)
 
 - **バックエンド開発**
 - 記録の可視化
+
 
 ## 開発における工夫した点  
 
@@ -71,6 +89,7 @@ FlushTune
 
 - 複雑系コースならではの**各メンバーの高い専門性**を考慮し、それぞれの役割に注力できるよう工夫
     - ソフトウェアの各部品の**入出力を最優先で定義**
+        ![全体構成図](docs/image/architecture.webp)
         - 入出力: 関数の引数/返り値、HTTPリクエスト/レスポンスなど
     - 入出力に合わせた各部品の具体的な実装を、担当者に全面的に委任
     - コードやブランチ運用のスタイルは、PEP8やGitHubフローを意識しつつ、規則や信条で強制しない方針に
