@@ -65,11 +65,10 @@
 </script>
 
 <Window>
-	<h1 class="text-4xl font-bold">記録</h1>
-	<p class="text-lg mt-4">感情の量</p>
+	<h1 class="text-4xl font-bold">感情の記録</h1>
 	<DrawBarGraph {getEmotionFreq} {analysis} />
 
-	<p class="text-lg mt-4">感情の素</p>
+	<p class="text-lg mt-4">感情の種類</p>
 
 	<div class="flex justify-start w-full gap-1 flex-wrap">
 		{#each emotions_selection as emotion}
