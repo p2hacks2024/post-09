@@ -32,6 +32,10 @@
 						category={emotion}
 						selected={emotion === chosenEmotion}
 						onClick={() => {
+							if (chosenEmotion === emotion) {
+								chosenEmotion = '';
+								return;
+							}
 							chosenEmotion = emotion;
 						}}
 					/>
@@ -45,6 +49,11 @@
 				type="text"
 				class="w-full p-2 rounded-md border-2 border-entryBorder bg-entryBack"
 				bind:value={prompt}
+				on:input={() => {
+					if (prompt) {
+						chosenEmotion = '';
+					}
+				}}
 			/>
 		</div>
 
@@ -55,8 +64,8 @@
 		<PressButton
 			onClick={() => {
 				console.log(chosenEmotion, prompt);
-				if (!chosenEmotion) {
-					alert = 'まずは今の感情を入力してみましょう';
+				if (!chosenEmotion && !prompt) {
+					alert = '感情を選択するか、言葉で教えてください';
 					return;
 				}
 				scene = 'playing';
