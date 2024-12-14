@@ -21,10 +21,22 @@
 <Window>
 	<div class="w-full flex flex-col gap-5">
 		<div class="text-lg">
-			<Typewriter text="思い出した嫌な出来事について教えてください" />
+			<Typewriter text="思い出した嫌な出来事を教えてください" />
 		</div>
+
+		<input
+			type="text"
+			class="w-full p-2 rounded-md border-2 border-entryBorder bg-entryBack"
+			bind:value={prompt}
+			on:input={() => {
+				if (prompt) {
+					chosenEmotion = '';
+				}
+			}}
+		/>
+
 		<div>
-			<div>現れた感情</div>
+			<div>または、現れた感情を教えてください</div>
 
 			<div class="flex justify-start w-full gap-4 flex-wrap">
 				{#each emotionTable as emotion}
@@ -37,24 +49,11 @@
 								return;
 							}
 							chosenEmotion = emotion;
+							prompt = '';
 						}}
 					/>
 				{/each}
 			</div>
-		</div>
-
-		<div>
-			または、あなた自身の言葉で...
-			<input
-				type="text"
-				class="w-full p-2 rounded-md border-2 border-entryBorder bg-entryBack"
-				bind:value={prompt}
-				on:input={() => {
-					if (prompt) {
-						chosenEmotion = '';
-					}
-				}}
-			/>
 		</div>
 
 		<div class="text-md text-red-200 text-center">
