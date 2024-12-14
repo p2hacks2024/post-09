@@ -68,7 +68,7 @@ class Suggester:
             n_gpu_layers=-1,
             n_ctx=1024,
             n_batch=512,
-            temperature=0.2,
+            temperature=0.8,
             verbose=True,
         )
 
