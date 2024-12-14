@@ -27,6 +27,14 @@ FlushTune
 - 出来事や感情を言語化し、心を落ち着けるためのアドバイスをもらいたい方
 
 ## 利用の流れ  
+
+<div align="center" style="display: flex; gap: 2px">
+<img src="docs/image/scene-title.png" alt="title" width="200"></img>
+<img src="docs/image/scene-choice.png" alt="choice" width="200"></img>
+<img src="docs/image/scene-playing.png" alt="playing" width="200"></img>
+<img src="docs/image/scene-analysis.png" alt="analysis" width="200"></img>
+</div>
+
 1. FlushTuneにSpotifyアカウントでログインする
 1. ユーザーが出来事（フラッシュバック）や感情を入力
 1. LLMがユーザーの感情を分析
