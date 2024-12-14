@@ -15,10 +15,10 @@ export default defineConfig({
     },
 
     manifest: {
-      name: 'frontend',
-      short_name: 'frontend',
-      description: 'frontend',
-      theme_color: '#ffffff',
+      name: 'FlushTune',
+      short_name: 'FlushTune',
+      description: 'フラッシュバックを素敵な音楽で洗い流す',
+      theme_color: '#062e62',
     },
 
     workbox: {
